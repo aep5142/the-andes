@@ -3,56 +3,557 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>v09 — Agustín Eyzaguirre</title>
+  <title>The Andes — v09 — Scientific Editorial</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Georgia', serif;
-      background: #f5f4f0;
-      color: #1a1a1a;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    :root {
+      --bg:     #f4f6f8;
+      --card:   #ffffff;
+      --ink:    #1a2030;
+      --accent: #2a5fa8;
+      --gold:   #d4860a;
+      --stone:  #6a7a8a;
+      --rule:   #c8d0dc;
+      --pale:   #e8eef6;
+      --space:  #050810;
+      --navy:   #0a1628;
+      --sgold:  #f0b840;
+      --spale:  #c8d8f0;
+      --glacier:#1a6b8a;
     }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: var(--bg); color: var(--ink); line-height: 1.7; }
+
     nav {
-      padding: 1rem 2rem;
-      font-size: 0.85rem;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(26,32,48,0.92); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(200,208,220,0.1);
     }
-    nav a { color: #555; text-decoration: none; border-bottom: 1px solid #ccc; }
-    nav a:hover { color: #1a1a1a; }
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.5rem;
-      padding: 4rem 2rem;
+    nav a { color: var(--rule); text-decoration: none; font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    nav a:hover { color: #fff; }
+    .nav-title { font-size: 0.82rem; color: var(--rule); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* ── HERO: Split editorial layout ─────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 58px;
     }
-    .label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #aaa;
+    .hero-text {
+      padding: 4rem 4rem 4rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+      background: var(--bg); border-right: 1px solid var(--rule);
     }
-    h1 {
-      font-size: 3rem;
-      font-weight: normal;
-      color: #ccc;
+    .sec-tag {
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--stone); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem;
     }
-    p {
-      font-size: 0.9rem;
-      color: #bbb;
-      font-style: italic;
+    .sec-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--rule); }
+    .hero-label { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--stone); margin-bottom: 0.8rem; }
+    .hero h1 {
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      font-weight: normal; color: var(--ink); line-height: 0.95; letter-spacing: -2px;
+    }
+    .hero-sub { margin-top: 1.2rem; font-size: 1.05rem; color: var(--stone); font-style: italic; max-width: 380px; line-height: 1.75; }
+    .hero-divider { border: none; border-top: 1px solid var(--rule); margin: 1.8rem 0; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; }
+    .h-stat .num { display: block; font-size: 1.5rem; color: var(--accent); letter-spacing: -0.5px; }
+    .h-stat .lbl { font-size: 0.68rem; color: var(--stone); text-transform: uppercase; letter-spacing: 1.5px; }
+
+    /* Carousel (right column) */
+    .hero-carousel { position: relative; overflow: hidden; min-height: 400px; }
+    .carousel-track {
+      position: absolute; top: 0; left: 0;
+      width: 400%; height: 100%; display: flex;
+      animation: c-slide 20s linear infinite;
+    }
+    .carousel-slide { flex: 0 0 25%; height: 100%; background-size: cover; background-position: center; }
+    .s1 { background-image: url('./images/aconcagua.jpg'); }
+    .s2 { background-image: url('./images/torres.jpg'); }
+    .s3 { background-image: url('./images/titicaca.jpg'); }
+    .s4 { background-image: url('./images/perito_moreno.jpg'); }
+    @keyframes c-slide {
+      0%,  22% { transform: translateX(0%);   }
+      25%, 47% { transform: translateX(-25%); }
+      50%, 72% { transform: translateX(-50%); }
+      75%, 97% { transform: translateX(-75%); }
+      100%     { transform: translateX(0%);   }
+    }
+
+    /* ── Sections ─────────────────────────────── */
+    section { padding: 5rem 4rem; border-top: 1px solid var(--rule); }
+    .lbl { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .ttl { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: normal; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+    .intro { font-size: 1rem; color: var(--stone); max-width: 640px; line-height: 1.9; }
+
+    /* ── SA MAP (dark band) ───────────────────── */
+    .map-section { background: var(--space); border-color: transparent; }
+    .map-section .lbl { color: rgba(200,216,240,0.6); }
+    .map-section .ttl { color: #eef4fc; }
+    .map-section .intro { color: rgba(200,216,240,0.7); }
+    .map-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .map-stats { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .map-stat { display: flex; align-items: baseline; gap: 0.8rem; }
+    .map-stat .num { font-size: 1.4rem; color: var(--sgold); min-width: 110px; }
+    .map-stat .desc { font-size: 0.85rem; color: rgba(200,216,240,0.65); }
+
+    /* ── PEAKS + PROFILE ─────────────────────── */
+    .peaks-section { background: var(--card); }
+    .peaks-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+    .elev-svg { width: 100%; }
+    .peak-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+    .peak-card { border-left: 3px solid var(--accent); padding-left: 1.2rem; }
+    .peak-elev { font-size: 2rem; font-weight: normal; color: var(--accent); letter-spacing: -1px; line-height: 1; }
+    .peak-unit { font-size: 0.95rem; color: var(--stone); }
+    .peak-name { font-size: 0.95rem; color: var(--ink); font-weight: bold; margin-top: 0.2rem; }
+    .peak-country { font-size: 0.77rem; color: var(--stone); font-style: italic; }
+    .peak-note { font-size: 0.83rem; color: #5a6a7a; line-height: 1.6; margin-top: 0.3rem; }
+
+    /* ── LENGTH + VOLCANOES ──────────────────── */
+    .length-section { background: var(--bg); }
+    .bar-wrap { margin-top: 2.5rem; max-width: 720px; }
+    .bar-row { display: grid; grid-template-columns: 175px 1fr 76px; align-items: center; gap: 1rem; margin-bottom: 0.8rem; }
+    .bar-name { font-size: 0.84rem; color: var(--ink); text-align: right; }
+    .bar-ctry { display: block; font-size: 0.7rem; color: var(--stone); font-style: italic; }
+    .bar-track { height: 18px; background: var(--pale); border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 2px; }
+    .bar-fill.a { background: var(--accent); }
+    .bar-fill.o { background: var(--stone); opacity: 0.6; }
+    .bar-val { font-size: 0.78rem; color: var(--stone); white-space: nowrap; }
+    .volcano-box {
+      margin-top: 2rem; background: var(--pale); border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.5rem; max-width: 720px;
+    }
+    .volcano-box p { font-size: 0.9rem; color: var(--ink); line-height: 1.75; }
+    .volcano-box strong { color: var(--gold); }
+
+    /* ── GLACIERS ─────────────────────────────── */
+    .glacier-section { background: var(--card); }
+    .glacier-grid {
+      margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      border-top: 1px solid var(--rule);
+    }
+    .g-card { padding: 2rem 1.8rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .g-num { font-size: 2.8rem; font-weight: normal; color: var(--glacier); letter-spacing: -2px; line-height: 1; }
+    .g-unit { font-size: 0.9rem; color: var(--stone); }
+    .g-head { margin-top: 0.4rem; font-size: 0.95rem; font-weight: bold; color: var(--ink); }
+    .g-body { margin-top: 0.4rem; font-size: 0.84rem; color: var(--stone); line-height: 1.7; }
+
+    /* ── INCAS ────────────────────────────────── */
+    .inca-section { background: var(--bg); }
+    .inca-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .inca-card { background: var(--card); padding: 1.8rem; border-top: 3px solid var(--gold); }
+    .inca-title { font-size: 0.95rem; font-weight: bold; color: var(--ink); margin-bottom: 0.5rem; }
+    .inca-body { font-size: 0.84rem; color: var(--stone); line-height: 1.75; }
+    .inca-stat { display: inline-block; margin-top: 0.7rem; font-size: 0.78rem; background: var(--pale); color: var(--accent); padding: 0.2rem 0.7rem; border-radius: 2px; }
+
+    /* ── HUMBOLDT ─────────────────────────────── */
+    .quote-section { background: var(--accent); border-color: transparent; }
+    .quote-inner { max-width: 820px; margin: 0 auto; text-align: center; padding: 2rem 2rem; }
+    .humboldt-q {
+      font-size: clamp(1.05rem, 2.2vw, 1.45rem); font-style: italic; color: #fff; line-height: 1.75;
+    }
+    .humboldt-cite { display: block; margin-top: 1.5rem; font-size: 0.76rem; font-style: normal; color: rgba(255,255,255,0.6); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* ── SKIES ────────────────────────────────── */
+    .skies-section { background: var(--card); }
+    .skies-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .sky-card { background: var(--bg); padding: 1.5rem; border-top: 3px solid var(--accent); }
+    .sky-label { font-size: 0.66rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .sky-title { font-size: 0.95rem; font-weight: bold; color: var(--ink); margin-bottom: 0.4rem; }
+    .sky-body { font-size: 0.83rem; color: var(--stone); line-height: 1.65; }
+
+    footer {
+      background: var(--ink); color: var(--stone); padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem;
+    }
+    footer a { color: var(--stone); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-carousel { height: 55vw; min-height: 280px; }
+      .map-inner { grid-template-columns: 1fr; }
+      .peaks-inner { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.5rem; }
+      .bar-row { grid-template-columns: 100px 1fr 55px; }
+      .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <nav><a href="../index.html">&larr; Back to gallery</a></nav>
-  <main>
-    <span class="label">Version</span>
-    <h1>09</h1>
-    <p>Design goes here</p>
-  </main>
+
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes &mdash; v09</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <!-- 01 HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <div class="sec-tag">01 &mdash; Introduction</div>
+      <p class="hero-label">South America &mdash; 7 Countries</p>
+      <h1>The<br>Andes</h1>
+      <p class="hero-sub">The longest mountain chain on Earth. The backbone of an entire continent. A world unto itself.</p>
+      <hr class="hero-divider">
+      <div class="hero-stats">
+        <div class="h-stat"><span class="num">8,500</span><span class="lbl">km long</span></div>
+        <div class="h-stat"><span class="num">6,962</span><span class="lbl">m highest peak</span></div>
+        <div class="h-stat"><span class="num">7</span><span class="lbl">nations</span></div>
+        <div class="h-stat"><span class="num">200M</span><span class="lbl">people in region</span></div>
+      </div>
+    </div>
+    <div class="hero-carousel">
+      <div class="carousel-track">
+        <div class="carousel-slide s1"></div>
+        <div class="carousel-slide s2"></div>
+        <div class="carousel-slide s3"></div>
+        <div class="carousel-slide s4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 SA MAP -->
+  <section class="map-section">
+    <div class="map-inner">
+      <div>
+        <div class="sec-tag" style="color:rgba(200,216,240,0.4);">02 &mdash; Geography</div>
+        <p class="lbl">Where on the planet</p>
+        <h2 class="ttl">The Spine of South America</h2>
+        <p class="intro">The Andes run the entire western edge of the continent — a nearly continuous wall from Venezuela to Tierra del Fuego. Nowhere else does a mountain range define a continent so completely.</p>
+        <div class="map-stats">
+          <div class="map-stat"><span class="num">8,500 km</span><span class="desc">Total length — tip to tip</span></div>
+          <div class="map-stat"><span class="num">7 nations</span><span class="desc">Venezuela, Colombia, Ecuador, Peru, Bolivia, Chile, Argentina</span></div>
+          <div class="map-stat"><span class="num">67°</span><span class="desc">Degrees of latitude — tropics to subpolar</span></div>
+          <div class="map-stat"><span class="num">67 peaks</span><span class="desc">Summits above 6,000 m — more than any range outside the Himalayas</span></div>
+        </div>
+      </div>
+      <!-- Corrected South America SVG -->
+      <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" style="max-width:370px;width:100%;display:block;margin:0 auto;">
+        <defs>
+          <filter id="glow09">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
+            <feComposite in="SourceGraphic" in2="b" operator="over"/>
+          </filter>
+        </defs>
+        <rect width="400" height="600" fill="#071428"/>
+        <!-- Grid lines -->
+        <g opacity="0.1" stroke="#4a8ab8" stroke-width="0.5" fill="none">
+          <line x1="0" y1="48" x2="400" y2="48"/>
+          <line x1="0" y1="130" x2="400" y2="130"/>
+          <line x1="0" y1="212" x2="400" y2="212"/>
+          <line x1="0" y1="294" x2="400" y2="294"/>
+          <line x1="0" y1="376" x2="400" y2="376"/>
+          <line x1="0" y1="458" x2="400" y2="458"/>
+          <line x1="80" y1="0" x2="80" y2="600"/>
+          <line x1="160" y1="0" x2="160" y2="600"/>
+          <line x1="240" y1="0" x2="240" y2="600"/>
+          <line x1="320" y1="0" x2="320" y2="600"/>
+        </g>
+        <!-- South America — corrected shape -->
+        <path d="
+          M 105,22
+          C 135,12 168,10 200,16
+          C 226,21 250,33 268,52
+          C 282,68 290,88 295,112
+          C 300,132 302,152 301,170
+          C 300,186 294,200 283,214
+          C 270,230 253,245 236,262
+          C 218,280 200,300 183,322
+          C 165,345 147,370 130,397
+          C 113,424 99,450 92,474
+          C 87,490 87,504 91,516
+          C 95,526 103,532 113,530
+          C 123,527 131,517 134,504
+          C 137,490 132,474 123,458
+          C 113,440 100,421 92,400
+          C 84,377 81,352 80,325
+          C 80,297 80,268 80,239
+          C 80,209 80,179 81,150
+          C 82,122 85,96 90,72
+          C 95,52 100,36 105,22 Z"
+          fill="#1e5c3a" opacity="0.82"/>
+        <!-- Andes spine -->
+        <path d="
+          M 92,24 C 85,56 82,92 80,130
+          C 80,170 80,210 80,250
+          C 80,290 80,328 81,362
+          C 82,390 86,416 91,440
+          C 97,462 105,482 115,500
+          C 119,509 124,517 130,524"
+          stroke="#f0b840" stroke-width="4" fill="none" stroke-linecap="round"
+          filter="url(#glow09)" opacity="0.92"/>
+        <path d="
+          M 92,24 C 85,56 82,92 80,130
+          C 80,170 80,210 80,250
+          C 80,290 80,328 81,362
+          C 82,390 86,416 91,440
+          C 97,462 105,482 115,500
+          C 119,509 124,517 130,524"
+          stroke="#f0b840" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.12"/>
+        <!-- Equator (~12°N + 12° = y≈148 at 8px/degree) -->
+        <line x1="30" y1="148" x2="370" y2="148" stroke="#4a8ab8" stroke-width="0.8" stroke-dasharray="5,5" opacity="0.35"/>
+        <text x="340" y="145" font-size="8" fill="#4a8ab8" font-family="Georgia,serif" opacity="0.6">0°</text>
+        <!-- Tropic of Capricorn (~23.5°S = 148+188=336) -->
+        <line x1="30" y1="328" x2="370" y2="328" stroke="#4a8ab8" stroke-width="0.8" stroke-dasharray="5,5" opacity="0.2"/>
+        <text x="285" y="325" font-size="7.5" fill="#4a8ab8" font-family="Georgia,serif" opacity="0.4">23°S</text>
+        <!-- City dots -->
+        <circle cx="83" cy="98" r="2.5" fill="#f0b840" opacity="0.75"/>
+        <text x="92" y="102" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">Bogotá</text>
+        <circle cx="81" cy="146" r="2.5" fill="#f0b840" opacity="0.75"/>
+        <text x="90" y="150" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">Quito</text>
+        <circle cx="80" cy="222" r="2.5" fill="#f0b840" opacity="0.75"/>
+        <text x="89" y="226" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">Lima</text>
+        <circle cx="80" cy="288" r="2.5" fill="#f0b840" opacity="0.75"/>
+        <text x="89" y="292" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">La Paz</text>
+        <!-- Aconcagua -->
+        <circle cx="80" cy="362" r="3.5" fill="#fff" opacity="0.95"/>
+        <line x1="81" y1="358" x2="135" y2="340" stroke="#fff" stroke-width="0.7" opacity="0.6"/>
+        <text x="138" y="339" font-size="8.5" fill="#fdfcff" font-family="Georgia,serif" opacity="0.85">Aconcagua ▲ 6,962 m</text>
+        <circle cx="81" cy="428" r="2.5" fill="#f0b840" opacity="0.75"/>
+        <text x="90" y="432" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">Santiago</text>
+        <!-- Legend -->
+        <line x1="24" y1="574" x2="50" y2="574" stroke="#f0b840" stroke-width="3"/>
+        <text x="55" y="578" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">The Andes</text>
+        <rect x="24" y="585" width="24" height="9" fill="#1e5c3a" opacity="0.7"/>
+        <text x="55" y="594" font-size="8.5" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">South America</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 03 PEAKS -->
+  <section class="peaks-section">
+    <div class="sec-tag">03 &mdash; Elevation</div>
+    <p class="lbl">Elevation landmarks</p>
+    <h2 class="ttl">The Highest Peaks Outside Asia</h2>
+    <p class="intro">Five of the six highest summits outside the Himalayas rise from the Andes. An unbroken wall above 6,000 m runs from Ecuador to Argentina — a scale found nowhere else.</p>
+    <div class="peaks-inner">
+      <!-- SVG elevation profile -->
+      <svg viewBox="0 0 1100 340" class="elev-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pg09" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#2a5fa8" stop-opacity="0.9"/>
+            <stop offset="60%"  stop-color="#1a3870" stop-opacity="0.75"/>
+            <stop offset="100%" stop-color="#0d1e3a" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,340 L0,316 C28,298 52,272 72,248 C88,228 102,200 118,173
+          C132,150 143,116 158,88 C167,67 176,40 186,23 C194,10 202,6 210,10
+          C218,16 226,43 240,60 C252,44 264,10 277,0
+          C283,0 290,6 298,24 C308,48 316,94 328,126
+          C338,153 350,133 364,104 C376,78 383,48 394,30
+          C402,15 410,10 418,14 C426,20 434,50 448,86
+          C460,116 470,96 482,66 C494,38 502,10 514,0
+          C520,0 528,5 537,20 C547,42 560,88 574,128
+          C588,160 606,176 626,186 C646,194 673,180 700,190
+          C726,200 746,186 766,198 C786,210 801,230 822,242
+          C845,254 869,266 893,280 C913,292 935,308 953,323
+          C970,335 983,341 1100,340 Z"
+          fill="url(#pg09)"/>
+        <line x1="514" y1="2" x2="514" y2="68" stroke="#c8d0dc" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+        <circle cx="514" cy="3" r="3.5" fill="#fff" opacity="0.9"/>
+        <text x="514" y="84" text-anchor="middle" font-size="11" fill="#1a2030" font-family="Georgia,serif">Aconcagua</text>
+        <text x="514" y="98" text-anchor="middle" font-size="9.5" fill="#2a5fa8" font-family="Georgia,serif">6,962 m</text>
+
+        <line x1="277" y1="2" x2="277" y2="76" stroke="#c8d0dc" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+        <circle cx="277" cy="3" r="3" fill="#fff" opacity="0.85"/>
+        <text x="277" y="91" text-anchor="middle" font-size="10" fill="#1a2030" font-family="Georgia,serif">Huascarán</text>
+        <text x="277" y="104" text-anchor="middle" font-size="9" fill="#2a5fa8" font-family="Georgia,serif">6,768 m</text>
+
+        <line x1="186" y1="23" x2="186" y2="110" stroke="#c8d0dc" stroke-width="1" stroke-dasharray="3,3" opacity="0.55"/>
+        <circle cx="186" cy="25" r="2.5" fill="#fff" opacity="0.75"/>
+        <text x="186" y="125" text-anchor="middle" font-size="9.5" fill="#1a2030" font-family="Georgia,serif">Chimborazo</text>
+        <text x="186" y="138" text-anchor="middle" font-size="8.5" fill="#2a5fa8" font-family="Georgia,serif">6,310 m</text>
+
+        <circle cx="394" cy="32" r="2.5" fill="#d4860a" opacity="0.9"/>
+        <text x="370" y="26" text-anchor="middle" font-size="9" fill="#d4860a" font-family="Georgia,serif">Ojos del Salado 6,893 m</text>
+
+        <text x="18" y="332" font-size="8.5" fill="#6a7a8a" font-family="Georgia,serif" opacity="0.7">11°N — Venezuela</text>
+        <text x="1082" y="332" text-anchor="end" font-size="8.5" fill="#6a7a8a" font-family="Georgia,serif" opacity="0.7">55°S — Tierra del Fuego</text>
+      </svg>
+      <!-- Peak cards -->
+      <div class="peak-cards">
+        <div class="peak-card">
+          <div class="peak-elev">6,962<span class="peak-unit"> m</span></div>
+          <div class="peak-name">Aconcagua</div>
+          <div class="peak-country">Mendoza, Argentina</div>
+          <div class="peak-note">Highest peak in the Western Hemisphere. Snowmelt feeds rivers across central Argentina and Chile.</div>
+        </div>
+        <div class="peak-card">
+          <div class="peak-elev">6,893<span class="peak-unit"> m</span></div>
+          <div class="peak-name">Ojos del Salado</div>
+          <div class="peak-country">Argentina / Chile border</div>
+          <div class="peak-note">Earth's highest active volcano. Its crater lake at 6,390 m is the world's highest lake by elevation.</div>
+        </div>
+        <div class="peak-card">
+          <div class="peak-elev">6,768<span class="peak-unit"> m</span></div>
+          <div class="peak-name">Nevado Huascarán</div>
+          <div class="peak-country">Ancash, Peru</div>
+          <div class="peak-note">Peru's highest peak. Its tropical glaciers supply freshwater to millions in the lowlands below.</div>
+        </div>
+        <div class="peak-card">
+          <div class="peak-elev">6,310<span class="peak-unit"> m</span></div>
+          <div class="peak-name">Chimborazo</div>
+          <div class="peak-country">Chimborazo, Ecuador</div>
+          <div class="peak-note">Due to Earth's equatorial bulge, its summit is the point farthest from Earth's center — further than Everest.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LENGTH + VOLCANOES -->
+  <section class="length-section">
+    <div class="sec-tag">03b &mdash; Scale in context</div>
+    <p class="lbl">Range comparison</p>
+    <h2 class="ttl">Longer Than Any Range on Earth</h2>
+    <p class="intro">Measured end-to-end, the Andes are nearly twice the length of the Himalayas and more than seven times the Alps.</p>
+    <div class="bar-wrap">
+      <div class="bar-row">
+        <div class="bar-name">Andes <span class="bar-ctry">South America</span></div>
+        <div class="bar-track"><div class="bar-fill a" style="width:100%;"></div></div>
+        <div class="bar-val">8,500 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Rocky Mountains <span class="bar-ctry">North America</span></div>
+        <div class="bar-track"><div class="bar-fill o" style="width:57%;"></div></div>
+        <div class="bar-val">4,800 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Great Dividing Range <span class="bar-ctry">Australia</span></div>
+        <div class="bar-track"><div class="bar-fill o" style="width:41%;"></div></div>
+        <div class="bar-val">3,500 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Himalayas <span class="bar-ctry">Asia</span></div>
+        <div class="bar-track"><div class="bar-fill o" style="width:32%;"></div></div>
+        <div class="bar-val">2,700 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Alps <span class="bar-ctry">Europe</span></div>
+        <div class="bar-track"><div class="bar-fill o" style="width:14%;"></div></div>
+        <div class="bar-val">1,200 km</div>
+      </div>
+    </div>
+    <div class="volcano-box">
+      <p><strong>200+ active volcanoes.</strong> The Andes hosts the world's densest concentration of active volcanoes — all products of the Nazca oceanic plate subducting beneath South America at ~70 mm per year. Notable: <strong>Cotopaxi</strong> (Ecuador, 5,897 m), one of the world's highest active volcanoes; <strong>Villarrica</strong> (Chile, 2,847 m), with a persistent open lava lake; <strong>Ojos del Salado</strong> (Argentina/Chile, 6,893 m), Earth's highest active volcano.</p>
+    </div>
+  </section>
+
+  <!-- 04 GLACIERS -->
+  <section class="glacier-section">
+    <div class="sec-tag">04 &mdash; Hydrology</div>
+    <p class="lbl">Ice that feeds a continent</p>
+    <h2 class="ttl">The Water Tower of South America</h2>
+    <p class="intro">The Andes hold the world's largest concentration of tropical glaciers and the Southern Hemisphere's second-largest ice mass outside Antarctica. Their meltwater is the foundation of life across the continent.</p>
+    <div class="glacier-grid">
+      <div class="g-card">
+        <div class="g-num">~1,800<span class="g-unit"> glaciers</span></div>
+        <div class="g-head">Tropical glaciers in the Andes</div>
+        <div class="g-body">More than 99% of all tropical glaciers on Earth are in the Andes — concentrated in Peru, Bolivia, Ecuador, and Colombia above 4,500 m.</div>
+      </div>
+      <div class="g-card">
+        <div class="g-num">30%</div>
+        <div class="g-head">Of South America's freshwater</div>
+        <div class="g-body">Andean glaciers and snowfields supply nearly a third of the continent's freshwater — sustaining cities, agriculture, and ecosystems across the Pacific coast and beyond.</div>
+      </div>
+      <div class="g-card">
+        <div class="g-num">17,200<span class="g-unit"> km²</span></div>
+        <div class="g-head">Southern Patagonian Ice Field</div>
+        <div class="g-body">The largest temperate ice mass in the Southern Hemisphere. Its glaciers include Perito Moreno — one of the few in the world still advancing.</div>
+      </div>
+      <div class="g-card">
+        <div class="g-num">40%</div>
+        <div class="g-head">Volume lost since 1980</div>
+        <div class="g-body">Tropical Andean glaciers have lost roughly 40% of their area in 40 years. Cities like La Paz, Lima, and Quito face critical freshwater shortfalls as the ice retreats.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 INCAS -->
+  <section class="inca-section">
+    <div class="sec-tag">05 &mdash; Civilization</div>
+    <p class="lbl">People of the high peaks</p>
+    <h2 class="ttl">The Inca and the Mountains That Were Gods</h2>
+    <p class="intro">For the Inca, every major peak was an Apu — a divine spirit with power over rain, frost, and human affairs. Their entire civilization was built in vertical relationship with the Andes.</p>
+    <div class="inca-grid">
+      <div class="inca-card">
+        <div class="inca-title">The Mountain Gods — Apus</div>
+        <div class="inca-body">Every major peak was a living deity. The higher the mountain, the greater its power. The most sacred Inca ritual, the capacocha, brought offerings — sometimes human — to the highest reachable summits. Mummies found at 6,739 m on Llullaillaco remain the highest archaeological site on Earth.</div>
+        <span class="inca-stat">6,739 m — Llullaillaco, site of the capacocha discovery</span>
+      </div>
+      <div class="inca-card">
+        <div class="inca-title">Qhapaq Ñan — The Royal Road</div>
+        <div class="inca-body">The Inca built 40,000 km of roads across the Andes — more extensive than the Roman road network. Stone-paved, with suspension bridges over canyons, relay stations every 20 km, and chasquis (runners) who could carry messages 240 km a day. A UNESCO World Heritage site spanning six countries.</div>
+        <span class="inca-stat">40,000 km — total road network</span>
+      </div>
+      <div class="inca-card">
+        <div class="inca-title">Andenes — Terrace Agriculture</div>
+        <div class="inca-body">The Inca transformed vertical mountainsides into productive farmland through andenes — stone-walled terraces with built-in irrigation, frost protection, and soil management. Different crops grew at different altitudes: maize below, potatoes and quinoa above. Over 1 million hectares of terracing still exist across the Andes.</div>
+        <span class="inca-stat">1,000,000+ hectares of terraced land</span>
+      </div>
+      <div class="inca-card">
+        <div class="inca-title">Machu Picchu — City in the Clouds</div>
+        <div class="inca-body">Built at 2,430 m on a ridge above the Urubamba River, Machu Picchu was simultaneously a royal estate, agricultural center, and astronomical observatory. Its alignments with solstice sunrises and mountain peaks show that the Inca read the cosmos through the mountains. Hidden from the outside world for 400 years after the Spanish conquest.</div>
+        <span class="inca-stat">Built c. 1450 CE — elevation 2,430 m</span>
+      </div>
+      <div class="inca-card">
+        <div class="inca-title">Empire and Enduring Legacy</div>
+        <div class="inca-body">At its peak, the Inca Empire stretched 4,000 km along the Andes with a population of 12 million. The Spanish conquest of 1532 dismantled the empire but not its people. Today roughly 10 million people speak Quechua, the Inca language. Andean communities still name mountains as Apus, still farm terraces, still hold ceremonies on the peaks.</div>
+        <span class="inca-stat">~10 million Quechua speakers today</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 HUMBOLDT -->
+  <section class="quote-section">
+    <div class="sec-tag" style="color:rgba(255,255,255,0.4);justify-content:center;">06 &mdash; Humboldt</div>
+    <div class="quote-inner">
+      <blockquote class="humboldt-q">
+        "The most stupendous and varied assemblage of natural phenomena ever presented to the astonished observer — from the burning sands of the torrid zone to the icy peaks of the eternal snow line."
+      </blockquote>
+      <cite class="humboldt-cite">— Alexander von Humboldt, <em>Cosmos</em>, 1845</cite>
+    </div>
+  </section>
+
+  <!-- 07 SKIES -->
+  <section class="skies-section">
+    <div class="sec-tag">07 &mdash; Astronomy</div>
+    <p class="lbl">The sky above the Andes</p>
+    <h2 class="ttl">Where Science Meets the Universe</h2>
+    <p class="intro">The Atacama Plateau — 4,000–5,000 m above sea level, at the edge of the world's driest desert — offers conditions unmatched on Earth for observing the sky: near-zero humidity, 330+ clear nights per year, and air so thin the universe comes into sharp focus.</p>
+    <div class="skies-grid">
+      <div class="sky-card">
+        <div class="sky-label">Location</div>
+        <div class="sky-title">ALMA Observatory</div>
+        <div class="sky-body">The Atacama Large Millimeter/submillimeter Array sits at 5,058 m on the Chajnantor Plateau, Chile. Its 66 high-precision antennas work in concert to form the most powerful radio telescope array ever built, studying the cold, dark universe — the birthplaces of stars and galaxies.</div>
+      </div>
+      <div class="sky-card">
+        <div class="sky-label">Conditions</div>
+        <div class="sky-title">Why the Atacama</div>
+        <div class="sky-body">Less than 1 mm of precipitable water vapor in the atmosphere. 330+ cloudless nights per year. At 5,000 m, half the atmosphere stands below the telescope. No light pollution for hundreds of kilometers. Astronomers call it the closest thing on Earth to outer space.</div>
+      </div>
+      <div class="sky-card">
+        <div class="sky-label">Discovery</div>
+        <div class="sky-title">The Birth of Planets</div>
+        <div class="sky-body">In 2014, ALMA captured the first detailed images of a protoplanetary disk — rings of gas and dust around the young star HL Tauri showing planets forming in real time. The observation overturned existing models of how planetary systems develop and formed.</div>
+      </div>
+      <div class="sky-card">
+        <div class="sky-label">History</div>
+        <div class="sky-title">5,000 Years of Andean Astronomy</div>
+        <div class="sky-body">The Inca read the sky with extraordinary precision — tracking the Pleiades for agricultural calendars, identifying "dark constellations" in the Milky Way's dust lanes, and aligning cities and temples to solstice and equinox positions. ALMA stands on ground that humans have used to study the stars for five millennia.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Design Build Ship &mdash; v09 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
 </body>
 </html>
