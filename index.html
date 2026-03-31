@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Process Gallery — Agustín Eyzaguirre</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f4f0;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 3rem 2rem;
+    }
+
+    header {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 1.5rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: normal;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .grid {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .card:hover {
+      border-color: #1a1a1a;
+      transform: translateY(-2px);
+    }
+
+    .card .version-number {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+
+    .card .version-title {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .card .version-note {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.4rem;
+      font-style: italic;
+    }
+
+    footer {
+      max-width: 960px;
+      margin: 3rem auto 0;
+      border-top: 1px solid #ddd;
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Design Process Gallery</h1>
+    <p>Agustín Eyzaguirre — Design Build Ship, Spring 2026 — 25 iterations</p>
+  </header>
+
+  <div class="grid">
+
+    <a class="card" href="versions/v01.html">
+      <div class="version-number">v01</div>
+      <div class="version-title">Editorial Magazine</div>
+      <div class="version-note">Starting point — deep blue, Georgia serif, photos</div>
+    </a>
+
+    <a class="card" href="versions/v02.html">
+      <div class="version-number">v02</div>
+      <div class="version-title">Elevation Profile</div>
+      <div class="version-note">SVG mountain silhouette — dusk purples</div>
+    </a>
+
+    <a class="card" href="versions/v03.html">
+      <div class="version-number">v03</div>
+      <div class="version-title">Glaciers &amp; Climate</div>
+      <div class="version-note">Ice, urgency — Perito Moreno hero</div>
+    </a>
+
+    <a class="card" href="versions/v04.html">
+      <div class="version-number">v04</div>
+      <div class="version-title">Earth View</div>
+      <div class="version-note">SVG globe — Andes spine on the planet</div>
+    </a>
+
+    <a class="card" href="versions/v05.html">
+      <div class="version-number">v05</div>
+      <div class="version-title">Music &amp; Soul</div>
+      <div class="version-note">Andean instruments — warm terracotta</div>
+    </a>
+
+    <a class="card" href="versions/v06.html">
+      <div class="version-number">v06</div>
+      <div class="version-title">Ancient Civilizations</div>
+      <div class="version-note">Inca history — parchment &amp; sienna tones</div>
+    </a>
+
+    <a class="card" href="versions/v07.html">
+      <div class="version-number">v07</div>
+      <div class="version-title">Brutalist Typography</div>
+      <div class="version-note">No images — black, white, yellow</div>
+    </a>
+
+    <a class="card" href="versions/v08.html">
+      <div class="version-number">v08</div>
+      <div class="version-title">The Sky Above</div>
+      <div class="version-note">Atacama observatories — CSS star field</div>
+    </a>
+
+    <a class="card" href="versions/v09.html">
+      <div class="version-number">v09</div>
+      <div class="version-title">Version 09</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v10.html">
+      <div class="version-number">v10</div>
+      <div class="version-title">Version 10</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v11.html">
+      <div class="version-number">v11</div>
+      <div class="version-title">Version 11</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v12.html">
+      <div class="version-number">v12</div>
+      <div class="version-title">Version 12</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v13.html">
+      <div class="version-number">v13</div>
+      <div class="version-title">Version 13</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v14.html">
+      <div class="version-number">v14</div>
+      <div class="version-title">Version 14</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v15.html">
+      <div class="version-number">v15</div>
+      <div class="version-title">Version 15</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v16.html">
+      <div class="version-number">v16</div>
+      <div class="version-title">Version 16</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v17.html">
+      <div class="version-number">v17</div>
+      <div class="version-title">Version 17</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v18.html">
+      <div class="version-number">v18</div>
+      <div class="version-title">Version 18</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v19.html">
+      <div class="version-number">v19</div>
+      <div class="version-title">Version 19</div>
+      <div class="version-note"></div>
+    </a>
+
+    <a class="card" href="versions/v20.html">
+      <div class="version-number">v20</div>
+      <div class="version-title">Version 20</div>
+      <div class="version-note">Converging</div>
+    </a>
+
+    <a class="card" href="versions/v21.html">
+      <div class="version-number">v21</div>
+      <div class="version-title">Version 21</div>
+      <div class="version-note">Converging</div>
+    </a>
+
+    <a class="card" href="versions/v22.html">
+      <div class="version-number">v22</div>
+      <div class="version-title">Version 22</div>
+      <div class="version-note">Converging</div>
+    </a>
+
+    <a class="card" href="versions/v23.html">
+      <div class="version-number">v23</div>
+      <div class="version-title">Version 23</div>
+      <div class="version-note">Refining</div>
+    </a>
+
+    <a class="card" href="versions/v24.html">
+      <div class="version-number">v24</div>
+      <div class="version-title">Version 24</div>
+      <div class="version-note">Refining</div>
+    </a>
+
+    <a class="card" href="versions/v25.html">
+      <div class="version-number">v25</div>
+      <div class="version-title">Version 25</div>
+      <div class="version-note">Final</div>
+    </a>
+
+  </div>
+
+  <footer>
+    <p>Design Build Ship — Assignment 1 — Spring 2026</p>
+  </footer>
+
+</body>
+</html>

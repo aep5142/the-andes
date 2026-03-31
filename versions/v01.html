@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Andes — v01</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep:  #1a3550;
+      --blue-mid:   #2d5f8a;
+      --blue-light: #4a82ab;
+      --blue-pale:  #c8dce8;
+      --cream:      #f0ede6;
+      --stone:      #8a9aaa;
+      --earth:      #9b7d5a;
+      --text:       #1e2830;
+      --white:      #fafaf8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Navigation ───────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(26, 53, 80, 0.85);
+      backdrop-filter: blur(6px);
+    }
+
+    nav a {
+      color: var(--blue-pale);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    nav a:hover { color: var(--white); }
+
+    nav .nav-title {
+      font-size: 0.85rem;
+      color: var(--blue-pale);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--blue-deep);
+      background-image:
+        linear-gradient(to top, rgba(26,53,80,0.88) 0%, rgba(26,53,80,0.35) 55%, rgba(26,53,80,0.12) 100%),
+        url('./images/aconcagua.jpg');
+      background-size: cover;
+      background-position: center 35%;
+    }
+
+    .hero-label {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--blue-pale);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: normal;
+      color: var(--white);
+      line-height: 0.9;
+      letter-spacing: -2px;
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: 1.2rem;
+      color: var(--blue-pale);
+      font-style: italic;
+      max-width: 460px;
+    }
+
+    .hero-stats {
+      margin-top: 2rem;
+      display: flex;
+      gap: 2.5rem;
+      border-top: 1px solid rgba(200,220,232,0.3);
+      padding-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat .num {
+      display: block;
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-stat .lbl {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--stone);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── Section base ─────────────────────────────── */
+    section {
+      padding: 6rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: normal;
+      line-height: 1.2;
+      color: var(--blue-deep);
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      font-size: 1.05rem;
+      color: #4a5a6a;
+      max-width: 620px;
+      line-height: 1.8;
+    }
+
+    /* ── Facts ────────────────────────────────────── */
+    .facts-section {
+      background: var(--blue-deep);
+    }
+
+    .facts-section .section-label { color: var(--blue-pale); }
+    .facts-section .section-title { color: var(--white); }
+
+    .facts-grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      border-top: 1px solid rgba(200,220,232,0.15);
+    }
+
+    .fact-card {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(200,220,232,0.12);
+      border-bottom: 1px solid rgba(200,220,232,0.12);
+    }
+
+    .fact-number {
+      font-size: 3.5rem;
+      font-weight: normal;
+      color: var(--blue-pale);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .fact-unit {
+      font-size: 1rem;
+      color: var(--stone);
+    }
+
+    .fact-headline {
+      margin-top: 0.6rem;
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: bold;
+    }
+
+    .fact-body {
+      margin-top: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--stone);
+      line-height: 1.7;
+    }
+
+    /* ── Peaks chart ──────────────────────────────── */
+    .peaks-section {
+      background: var(--white);
+    }
+
+    .chart-wrapper {
+      margin-top: 3rem;
+      max-width: 760px;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      font-size: 0.8rem;
+      color: var(--stone);
+      flex-wrap: wrap;
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 72px;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .bar-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      text-align: right;
+    }
+
+    .bar-name .bar-country {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--stone);
+      font-style: italic;
+    }
+
+    .bar-track {
+      height: 22px;
+      background: #e4eaf0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .bar-fill.andes   { background: var(--blue-mid); }
+    .bar-fill.world   { background: var(--stone); opacity: 0.55; }
+    .bar-fill.everest { background: #c5784a; opacity: 0.75; }
+
+    .bar-value {
+      font-size: 0.8rem;
+      color: var(--stone);
+      white-space: nowrap;
+    }
+
+    .chart-divider {
+      border: none;
+      border-top: 1px dashed #c0cdd6;
+      margin: 1.5rem 0;
+    }
+
+    /* ── Photos ───────────────────────────────────── */
+    .photos-section {
+      background: var(--cream);
+      padding-bottom: 4rem;
+    }
+
+    .photo-grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 340px 260px;
+      gap: 1rem;
+    }
+
+    figure {
+      overflow: hidden;
+      background: var(--blue-pale);
+      position: relative;
+    }
+
+    figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.88);
+      transition: transform 0.5s ease;
+    }
+
+    figure:hover img { transform: scale(1.03); }
+
+    figure:nth-child(1) { grid-row: 1 / 3; }
+
+    figcaption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.6rem 1rem;
+      background: rgba(26,53,80,0.65);
+      font-size: 0.74rem;
+      color: var(--blue-pale);
+      font-style: italic;
+    }
+
+    /* ── Closing prose ────────────────────────────── */
+    .closing-section {
+      background: var(--blue-deep);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .closing-section .section-title { color: var(--white); }
+    .closing-section .section-label { color: var(--blue-pale); }
+
+    .closing-text {
+      font-size: 1rem;
+      color: var(--blue-pale);
+      line-height: 1.9;
+    }
+
+    .closing-text p + p { margin-top: 1.2rem; }
+
+    .closing-quote {
+      border-left: 3px solid var(--blue-light);
+      padding-left: 1.5rem;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.65;
+    }
+
+    .closing-quote cite {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      font-style: normal;
+      color: var(--stone);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer {
+      background: #0e2237;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--stone);
+    }
+
+    footer a {
+      color: var(--stone);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--blue-pale); }
+
+    /* ── Responsive ───────────────────────────────── */
+    @media (max-width: 768px) {
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 5rem 1.5rem 3rem; }
+      .bar-row { grid-template-columns: 110px 1fr 56px; }
+      .photo-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 260px 200px 200px;
+      }
+      figure:nth-child(1) { grid-row: auto; }
+      .closing-section { grid-template-columns: 1fr; gap: 2.5rem; }
+      nav .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes &mdash; v01</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-label">South America &mdash; 7 Countries</p>
+    <h1>The<br>Andes</h1>
+    <p class="hero-sub">The backbone of a continent. The longest mountain range on Earth.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">8,500</span>
+        <span class="lbl">Kilometers long</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">6,962</span>
+        <span class="lbl">Meters — highest peak</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">7</span>
+        <span class="lbl">Nations crossed</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">35M</span>
+        <span class="lbl">People within the range</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Astonishing Facts -->
+  <section class="facts-section">
+    <p class="section-label">Five things that will astonish you</p>
+    <h2 class="section-title">Understanding the Immensity</h2>
+    <div class="facts-grid">
+
+      <div class="fact-card">
+        <div class="fact-number">8,500<span class="fact-unit"> km</span></div>
+        <div class="fact-headline">Longer than New York to Frankfurt — twice over</div>
+        <div class="fact-body">The Andes stretches the entire western edge of South America, from Venezuela in the tropics to Tierra del Fuego at the edge of Antarctica.</div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-number">6,962<span class="fact-unit"> m</span></div>
+        <div class="fact-headline">The tallest mountain outside Asia</div>
+        <div class="fact-body">Aconcagua in Argentina stands higher than any peak in Europe, Africa, or North America. The entire Alps would fit beneath its summit.</div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-number">3,812<span class="fact-unit"> m</span></div>
+        <div class="fact-headline">The world's highest navigable lake</div>
+        <div class="fact-body">Lake Titicaca sits higher than most European summits. At this altitude, the Inca civilization was born. Today, over 3 million people still call its shores home.</div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-number">200<span class="fact-unit">+</span></div>
+        <div class="fact-headline">Active volcanoes along the chain</div>
+        <div class="fact-body">The Andes hosts the world's highest concentration of active volcanoes — including Ojos del Salado, Earth's highest active volcano at 6,893 m.</div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-number">1<span class="fact-unit"> river</span></div>
+        <div class="fact-headline">The Amazon is born here</div>
+        <div class="fact-body">The world's largest river by volume begins as snowmelt on the slopes of Nevado Mismi, Peru — 5,597 m above sea level — before crossing an entire continent to the Atlantic.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Peaks Comparison Chart -->
+  <section class="peaks-section">
+    <p class="section-label">Elevation comparison</p>
+    <h2 class="section-title">Among the World's Mightiest Peaks</h2>
+    <p class="section-intro">Five of the six highest peaks outside Asia belong to the Andes. Only the Himalayas surpass what the Andes has quietly built over millions of years.</p>
+
+    <div class="chart-wrapper">
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:#2d5f8a;"></span>Andes peaks</span>
+        <span><span class="legend-dot" style="background:#c5784a; opacity:.75;"></span>Everest — Himalaya</span>
+        <span><span class="legend-dot" style="background:#8a9aaa; opacity:.55;"></span>World reference peaks</span>
+      </div>
+
+      <!-- Scale: Everest 8849 = 100% -->
+      <div class="bar-row">
+        <div class="bar-name">Aconcagua <span class="bar-country">Argentina</span></div>
+        <div class="bar-track"><div class="bar-fill andes" style="width:78.7%"></div></div>
+        <div class="bar-value">6,962 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Ojos del Salado <span class="bar-country">Argentina / Chile</span></div>
+        <div class="bar-track"><div class="bar-fill andes" style="width:77.9%"></div></div>
+        <div class="bar-value">6,891 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Monte Pissis <span class="bar-country">Argentina</span></div>
+        <div class="bar-track"><div class="bar-fill andes" style="width:76.8%"></div></div>
+        <div class="bar-value">6,795 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Cerro Mercedario <span class="bar-country">Argentina</span></div>
+        <div class="bar-track"><div class="bar-fill andes" style="width:76.5%"></div></div>
+        <div class="bar-value">6,770 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Nevado Huascarán <span class="bar-country">Peru</span></div>
+        <div class="bar-track"><div class="bar-fill andes" style="width:76.4%"></div></div>
+        <div class="bar-value">6,757 m</div>
+      </div>
+
+      <hr class="chart-divider">
+
+      <div class="bar-row">
+        <div class="bar-name">Everest <span class="bar-country">Nepal / Tibet — Himalaya</span></div>
+        <div class="bar-track"><div class="bar-fill everest" style="width:100%"></div></div>
+        <div class="bar-value">8,849 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Denali <span class="bar-country">Alaska — N. America</span></div>
+        <div class="bar-track"><div class="bar-fill world" style="width:69.9%"></div></div>
+        <div class="bar-value">6,190 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Kilimanjaro <span class="bar-country">Tanzania — Africa</span></div>
+        <div class="bar-track"><div class="bar-fill world" style="width:66.6%"></div></div>
+        <div class="bar-value">5,895 m</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Mont Blanc <span class="bar-country">France / Italy — Europe</span></div>
+        <div class="bar-track"><div class="bar-fill world" style="width:54.3%"></div></div>
+        <div class="bar-value">4,808 m</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Photo Gallery -->
+  <section class="photos-section">
+    <p class="section-label">In pictures</p>
+    <h2 class="section-title">The Face of the Range</h2>
+
+    <div class="photo-grid">
+
+      <figure>
+        <img
+          src="./images/aconcagua.jpg"
+          alt="Aconcagua (6,962 m) from Plaza de Mulas base camp, Argentina" />
+        <figcaption>Aconcagua (6,962 m) — highest peak in the Western Hemisphere. Plaza de Mulas, Argentina. &copy; Wikimedia Commons</figcaption>
+      </figure>
+
+      <figure>
+        <img
+          src="./images/titicaca.jpg"
+          alt="Lake Titicaca, Bolivia" />
+        <figcaption>Lake Titicaca — 3,812 m above sea level, Bolivia. &copy; Wikimedia Commons</figcaption>
+      </figure>
+
+      <figure>
+        <img
+          src="./images/torres.jpg"
+          alt="Torres del Paine, Patagonian Andes, Chile" />
+        <figcaption>Torres del Paine — Patagonian Andes, Chile. &copy; Wikimedia Commons</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <section class="closing-section">
+    <div>
+      <p class="section-label">A living range</p>
+      <h2 class="section-title">More Than Rock and Ice</h2>
+      <div class="closing-text">
+        <p>The Andes is not a single landscape — it is a world unto itself. From tropical cloud forests in Colombia and Ecuador to the hyper-arid Atacama Desert, from the wind-scoured Patagonian steppe to the high-altitude wetlands of Bolivia, the range holds nearly every climate zone on Earth.</p>
+        <p>Over 30,000 species of plants grow here — roughly one in six of all plant species on the planet. The altiplano, a vast plateau sitting above 3,500 m, supports millions of people, herds of vicuñas, and flamingos wading in turquoise salt lakes.</p>
+        <p>Ancient civilizations — the Tiwanaku, the Wari, the Inca — didn't just survive here. They built roads, aqueducts, and cities at altitudes that leave most visitors breathless. Their descendants still do.</p>
+      </div>
+    </div>
+    <div>
+      <blockquote class="closing-quote">
+        "The Andes are not just mountains. They are the spine of an entire continent — the source of its mightiest rivers, the cradle of its oldest civilizations."
+        <cite>— Adapted from Humboldt, <em>Cosmos</em>, 1845</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span>Data: <a href="https://es.wikipedia.org/wiki/Cordillera_de_los_Andes" target="_blank">Wikipedia — Cordillera de los Andes</a></span>
+    <span>Design Build Ship &mdash; v01 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Andes — v05 — Music &amp; Soul</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --burgundy:  #2a0812;
+      --rust:      #7a2810;
+      --terra:     #c05a2a;
+      --gold:      #d4a017;
+      --sand:      #e8d5a0;
+      --cream:     #f5eed8;
+      --stone:     #8a6040;
+      --white:     #fdf9f0;
+      --text:      #1a0808;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(42,8,18,0.9); backdrop-filter: blur(6px);
+    }
+    nav a { color: var(--sand); text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    nav a:hover { color: var(--white); }
+    .nav-title { font-size: 0.85rem; color: var(--sand); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; background: var(--burgundy);
+      display: grid; grid-template-columns: 1fr 420px;
+      align-items: center; padding: 6rem 4rem 4rem; gap: 4rem;
+    }
+    .hero-label { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(3rem, 8vw, 7rem); font-weight: normal; color: var(--white); line-height: 0.92; letter-spacing: -2px; }
+    .hero-sub { margin-top: 1.2rem; font-size: 1.1rem; color: rgba(232,213,160,0.8); font-style: italic; max-width: 460px; }
+    .hero-quote {
+      margin-top: 2.5rem; border-left: 3px solid var(--terra);
+      padding-left: 1.4rem; font-size: 1.05rem; font-style: italic;
+      color: rgba(232,213,160,0.7); line-height: 1.7;
+    }
+    .hero-quote cite { display: block; margin-top: 0.5rem; font-size: 0.75rem; font-style: normal; color: var(--stone); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Instrument image panel */
+    .hero-img {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-img img {
+      width: 100%; max-width: 380px; height: 520px;
+      object-fit: cover; object-position: center;
+      filter: sepia(0.3) saturate(0.8);
+      border-top: 4px solid var(--gold);
+      border-bottom: 4px solid var(--gold);
+    }
+
+    /* Sections */
+    section { padding: 5rem 4rem; }
+    .lbl { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin-bottom: 0.5rem; }
+    .ttl { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: normal; line-height: 1.2; color: var(--burgundy); margin-bottom: 1rem; }
+    .intro { font-size: 1rem; color: var(--rust); max-width: 620px; line-height: 1.9; }
+
+    /* Instruments section */
+    .inst-section { background: var(--white); }
+    .inst-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+    .inst-card {
+      background: var(--cream); padding: 2rem 1.8rem;
+      border-top: 3px solid var(--terra);
+    }
+    .inst-name { font-size: 1.4rem; font-weight: normal; color: var(--burgundy); letter-spacing: -0.5px; }
+    .inst-quechua { font-size: 0.75rem; color: var(--stone); font-style: italic; margin-bottom: 0.7rem; }
+    .inst-range { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); background: var(--burgundy); display: inline-block; padding: 0.15rem 0.6rem; margin-bottom: 0.8rem; }
+    .inst-desc { font-size: 0.88rem; color: #4a2810; line-height: 1.7; }
+    .inst-fact { margin-top: 0.7rem; font-size: 0.8rem; color: var(--rust); font-style: italic; }
+
+    /* World reach section */
+    .world-section { background: var(--burgundy); }
+    .world-section .lbl { color: var(--sand); }
+    .world-section .ttl { color: var(--white); }
+    .world-section .intro { color: rgba(232,213,160,0.75); }
+    .songs-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .song-card { border-left: 3px solid var(--terra); padding-left: 1.4rem; }
+    .song-title { font-size: 1.1rem; color: var(--white); font-weight: bold; font-style: italic; }
+    .song-origin { font-size: 0.75rem; color: var(--stone); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
+    .song-desc { font-size: 0.87rem; color: rgba(232,213,160,0.72); line-height: 1.7; }
+
+    /* Traditions section */
+    .trad-section { background: var(--cream); }
+    .trad-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; }
+    .trad-card {
+      padding: 2.5rem 2rem; background: var(--white);
+      border-right: 1px solid #d8c098; border-bottom: 1px solid #d8c098;
+    }
+    .trad-region { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--terra); margin-bottom: 0.3rem; }
+    .trad-name { font-size: 1.05rem; font-weight: bold; color: var(--burgundy); margin-bottom: 0.5rem; }
+    .trad-desc { font-size: 0.85rem; color: #4a2810; line-height: 1.65; }
+
+    /* Closing */
+    .close-section {
+      background: var(--rust); padding: 5rem 4rem;
+    }
+    .close-section .lbl { color: rgba(245,238,216,0.7); }
+    .close-section .ttl { color: var(--white); }
+    .close-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 0; }
+    .close-body { font-size: 1rem; color: rgba(245,238,216,0.85); line-height: 1.9; }
+    .close-body p + p { margin-top: 1rem; }
+    blockquote.music-q {
+      border-left: 3px solid rgba(245,238,216,0.4); padding-left: 1.5rem;
+      font-size: 1.15rem; font-style: italic; color: var(--white); line-height: 1.65;
+    }
+    blockquote.music-q cite { display: block; margin-top: 0.8rem; font-size: 0.78rem; font-style: normal; color: rgba(245,238,216,0.6); letter-spacing: 1px; text-transform: uppercase; }
+
+    footer {
+      background: var(--burgundy); padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--stone);
+    }
+    footer a { color: var(--stone); text-decoration: none; }
+    footer a:hover { color: var(--sand); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 6rem 2rem 4rem; gap: 2.5rem; }
+      .hero-img img { height: 300px; }
+      section { padding: 4rem 1.5rem; }
+      .close-cols { grid-template-columns: 1fr; gap: 2rem; }
+      .close-section { padding: 4rem 1.5rem; }
+      .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes &mdash; v05</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <p class="hero-label">Music &mdash; Soul &mdash; Sound</p>
+      <h1>The<br>Voice<br>of the<br>Mountains</h1>
+      <p class="hero-sub">Long before cities rose on its slopes, the Andes already had music. Wind instruments carved from condor bone. Skin drums echoing in stone temples. A sound world unchanged for three thousand years.</p>
+      <blockquote class="hero-quote">
+        "The music of the Andes is the sound of the landscape itself — thin air, wind, distance, and the memory of the earth."
+        <cite>— Ethnomusicologist, University of Lima</cite>
+      </blockquote>
+    </div>
+    <div class="hero-img">
+      <img src="./images/charango.jpg" alt="Antara zampoña — Andean pan flute, Nazca culture" />
+    </div>
+  </section>
+
+  <section class="inst-section">
+    <p class="lbl">The instruments</p>
+    <h2 class="ttl">Four Voices of the Andes</h2>
+    <p class="intro">Andean music is built from wind and string and skin. Each instrument carries a geography — the wind instruments from the high plains, the strings from the valleys, the drums from everywhere.</p>
+    <div class="inst-grid">
+      <div class="inst-card">
+        <div class="inst-name">Zampoña</div>
+        <div class="inst-quechua">Also: Siku (Aymara), Antara (Quechua)</div>
+        <div class="inst-range">Altiplano, Bolivia &amp; Peru</div>
+        <div class="inst-desc">A set of panpipes bound in two rows, played by two people alternating notes — one plays the ira, the other the arka. Together they form a complete scale. No single player can play alone; the instrument requires another. A philosophy embedded in reeds.</div>
+        <div class="inst-fact">Tradition dating back 4,000+ years. Found in Nazca burial sites.</div>
+      </div>
+      <div class="inst-card">
+        <div class="inst-name">Quena</div>
+        <div class="inst-quechua">Quechua: qina — "hollow reed"</div>
+        <div class="inst-range">Central Andes, Peru to Bolivia</div>
+        <div class="inst-desc">A notched flute with no mouthpiece — the player holds it at the chin and shapes sound with their lip alone. This intimate contact between breath and instrument gives the quena its haunting, human timbre. It can sound like a voice, or like wind through a canyon.</div>
+        <div class="inst-fact">The primary melody instrument of Andean classical music. Over 5,000 years old.</div>
+      </div>
+      <div class="inst-card">
+        <div class="inst-name">Charango</div>
+        <div class="inst-quechua">Probably from Quechua: "small guitar"</div>
+        <div class="inst-range">Bolivia, Peru, Argentina, Chile</div>
+        <div class="inst-desc">A small 10-string lute, traditionally made from the back of an armadillo shell. It arrived after the Spanish brought guitars — Andean luthiers immediately adapted the European form into something entirely their own. Fast, bright, rhythmically complex.</div>
+        <div class="inst-fact">Born from colonial encounter. Now Bolivia's national instrument.</div>
+      </div>
+      <div class="inst-card">
+        <div class="inst-name">Bombo Leguero</div>
+        <div class="inst-quechua">Spanish-Quechua hybrid name</div>
+        <div class="inst-range">Northern Argentina, Andean foothills</div>
+        <div class="inst-desc">A large frame drum made from a hollowed tree trunk and animal skins. Its deep, resonant beat anchors everything else. In festive music, it marks the dance. In ritual music, it calls to the earth. Its sound carries across valleys that swallow all other sound.</div>
+        <div class="inst-fact">Central to chacarera, zamba, and carnavalito folk dances.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="world-section">
+    <p class="lbl">The Andes heard around the world</p>
+    <h2 class="ttl">When the Mountains Went Global</h2>
+    <p class="intro">Andean music is the only indigenous musical tradition in the Americas to have become a global phenomenon without being commercialized into something unrecognizable. The sounds survived.</p>
+    <div class="songs-grid">
+      <div class="song-card">
+        <div class="song-origin">Traditional Quechua — 16th century</div>
+        <div class="song-title">"El Cóndor Pasa"</div>
+        <div class="song-desc">Composed in Peru around 1913 by Daniel Alomía Robles, drawing on a pre-Columbian melody. Simon &amp; Garfunkel recorded it in 1970 as "If I Could." Now one of the most recognized melodies on Earth — and still a quena folk song in Andean villages.</div>
+      </div>
+      <div class="song-card">
+        <div class="song-origin">Traditional Bolivian — Altiplano</div>
+        <div class="song-title">"Llorando se fue"</div>
+        <div class="song-desc">A Bolivian morenada rhythm recorded by Los Kjarkas in 1981. Translated into French as "Lambada" in 1989 — it became one of the biggest-selling singles in history. Few buyers knew they were dancing to the Altiplano.</div>
+      </div>
+      <div class="song-card">
+        <div class="song-origin">Aymara — Lake Titicaca region</div>
+        <div class="song-title">Siku ritual music</div>
+        <div class="song-desc">Siku panpipe ensembles are performed at festivals across the Altiplano. The tradition is listed by UNESCO as Intangible Cultural Heritage of Humanity. The instruments are still made by hand from totora reeds growing on Lake Titicaca's shores.</div>
+      </div>
+      <div class="song-card">
+        <div class="song-origin">Northern Argentina — 19th century</div>
+        <div class="song-title">Zamba and Carnavalito</div>
+        <div class="song-desc">The folk dances of the Andean foothills — slow, romantic, handkerchief-waving zarabands and whirling carnival dances. Still danced at every regional festival from Salta to Jujuy, as they have been for generations.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trad-section">
+    <p class="lbl">By region</p>
+    <h2 class="ttl">Musical Traditions Across the Range</h2>
+    <p class="intro">The Andes is not one musical culture. Each altitude, each valley, each civilization left its own sound. From the Caribbean-influenced Pacific coast to the deep Amazonian slopes, the music changes with the landscape.</p>
+    <div class="trad-grid">
+      <div class="trad-card">
+        <div class="trad-region">Colombia — 4°N</div>
+        <div class="trad-name">Cumbia &amp; Vallenato</div>
+        <div class="trad-desc">Where the Andes meet the Caribbean. The accordion arrived with European settlers; the drums came with African enslaved people; the gaita flute is indigenous. Vallenato is a UNESCO-listed living heritage.</div>
+      </div>
+      <div class="trad-card">
+        <div class="trad-region">Ecuador — 0°</div>
+        <div class="trad-name">Pasillo &amp; Sanjuanito</div>
+        <div class="trad-desc">Pasillo — melancholic, guitar-driven, waltz-derived — is Ecuador's unofficial anthem. Sanjuanito, played during Inti Raymi (Inca sun festival), has been continuous since before the Spanish arrived.</div>
+      </div>
+      <div class="trad-card">
+        <div class="trad-region">Peru — 12°S</div>
+        <div class="trad-name">Huayno</div>
+        <div class="trad-desc">The dominant music of the Peruvian highlands — fast, pentatonic, quena and charango-driven. Modern chicha fuses huayno with electric guitar and synthesizers. Today it is Peru's most popular music, from Lima to Cusco.</div>
+      </div>
+      <div class="trad-card">
+        <div class="trad-region">Bolivia — 16°S</div>
+        <div class="trad-name">Morenada &amp; Tinku</div>
+        <div class="trad-desc">Bolivia's musical calendar is built around festival cycles. Morenada — theatrical, costumed, satirical — mocks colonial masters even as it celebrates with brass and drum. Tinku music accompanies a ritual combat festival in Potosí.</div>
+      </div>
+      <div class="trad-card">
+        <div class="trad-region">Chile — 33°S</div>
+        <div class="trad-name">Cueca</div>
+        <div class="trad-desc">Chile's national dance — a courtship ritual between partners who never touch. One dancer pursues, the other evades. The guitar, accordion, and harp accompany. Declared national patrimony in 1979.</div>
+      </div>
+      <div class="trad-card">
+        <div class="trad-region">Argentina — 26°S</div>
+        <div class="trad-name">Zamba &amp; Chacarera</div>
+        <div class="trad-desc">The music of the northwestern foothills. Intimate, lyrical, guitar-driven. The zamba is poetry set to rhythm — sung at wine harvests, at homesick gatherings, at family tables in the evening.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close-section">
+    <p class="lbl">Why the music survived</p>
+    <h2 class="ttl">A Sound That Outlasted Empires</h2>
+    <div class="close-cols">
+      <div class="close-body">
+        <p>The Spanish banned Andean instruments in the 16th century. They melted Inca metalwork, burned codices, renamed mountains. But they could not silence a flute made of bone that could be hidden in a pocket.</p>
+        <p>Andean music survived by absorbing what came at it. The charango made the Spanish guitar Andean. The cumbia absorbed African drums. The pasillo made the waltz its own. Each conquest created a new hybrid — and the mountain sound persisted at the core.</p>
+        <p>Today, Andean music fills festival grounds, radio stations, and concert halls from La Paz to New York. The quena player at the subway entrance and the UNESCO ceremony are the same tradition, separated only by an amplifier.</p>
+      </div>
+      <div>
+        <blockquote class="music-q">
+          "When I play the quena, I am not playing a flute. I am opening a channel between the world of the living and the world of the mountains. The music was always there. I am just letting it through."
+          <cite>— Eloy Machicado, Bolivian quena master</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Image: Antara, Nazca culture — &copy; Wikimedia Commons</span>
+    <span>Design Build Ship &mdash; v05 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
+</body>
+</html>

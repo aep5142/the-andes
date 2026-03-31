@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Andes — v04 — Earth View</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --space:   #050810;
+      --navy:    #0a1628;
+      --ocean:   #1b4f8a;
+      --land:    #2a6644;
+      --andes:   #d4880a;
+      --pale:    #c8d8f0;
+      --gold:    #f0b840;
+      --stone:   #5a7898;
+      --white:   #eef4fc;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: var(--space); color: var(--white); line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(5,8,16,0.85); backdrop-filter: blur(8px);
+    }
+    nav a { color: var(--pale); text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    nav a:hover { color: var(--white); }
+    .nav-title { font-size: 0.85rem; color: var(--pale); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; background: var(--space);
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 6rem 4rem 4rem;
+      gap: 4rem;
+    }
+
+    .hero-text {}
+    .hero-label { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--pale); margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(3rem, 7vw, 6rem); font-weight: normal; color: var(--white); line-height: 0.95; letter-spacing: -2px; }
+    .hero-sub { margin-top: 1.2rem; font-size: 1.1rem; color: rgba(200,216,240,0.8); font-style: italic; max-width: 440px; }
+    .hero-stats { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+    .stat-row { display: flex; align-items: baseline; gap: 0.8rem; }
+    .stat-num { font-size: 1.4rem; color: var(--gold); min-width: 90px; }
+    .stat-desc { font-size: 0.85rem; color: var(--stone); }
+
+    /* Globe */
+    .globe-wrap {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .globe-wrap svg { max-width: 520px; width: 100%; }
+
+    /* Sections */
+    section { padding: 5rem 4rem; }
+    .lbl { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--pale); margin-bottom: 0.5rem; }
+    .ttl { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: normal; line-height: 1.2; color: var(--white); margin-bottom: 1rem; }
+    .intro { font-size: 1rem; color: rgba(200,216,240,0.75); max-width: 620px; line-height: 1.9; }
+
+    /* Countries */
+    .countries-section { background: var(--navy); }
+    .countries-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .country-card { border-left: 2px solid var(--ocean); padding-left: 1.2rem; }
+    .c-name { font-size: 1.1rem; color: var(--white); font-weight: bold; }
+    .c-lat { font-size: 0.75rem; color: var(--stone); font-style: italic; margin-bottom: 0.4rem; }
+    .c-desc { font-size: 0.87rem; color: rgba(200,216,240,0.72); line-height: 1.7; }
+    .c-peak { margin-top: 0.5rem; font-size: 0.8rem; color: var(--gold); }
+
+    /* Scale comparison */
+    .scale-section { background: var(--space); }
+    .scale-vis {
+      margin-top: 3rem; position: relative; height: 120px;
+      display: flex; align-items: flex-end; gap: 2px; max-width: 900px;
+    }
+    .s-col {
+      flex: 1; background: var(--ocean); border-radius: 1px 1px 0 0;
+      position: relative; transition: opacity 0.2s;
+    }
+    .s-col.andes { background: var(--andes); }
+    .s-col-label {
+      position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.6rem; color: var(--stone); white-space: nowrap; text-align: center;
+    }
+
+    /* Journey section */
+    .journey-section { background: var(--navy); }
+    .journey-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; }
+    .j-card {
+      padding: 2rem 1.5rem; border-right: 1px solid rgba(27,79,138,0.3);
+      border-bottom: 1px solid rgba(27,79,138,0.3);
+    }
+    .j-region { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .j-title { font-size: 0.95rem; color: var(--white); font-weight: bold; margin-bottom: 0.4rem; }
+    .j-desc { font-size: 0.83rem; color: rgba(200,216,240,0.65); line-height: 1.65; }
+
+    footer {
+      background: #020408; padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--stone);
+    }
+    footer a { color: var(--stone); text-decoration: none; }
+    footer a:hover { color: var(--pale); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 6rem 2rem 4rem; gap: 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .globe-wrap svg { max-width: 360px; }
+      .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes &mdash; v04</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-label">Earth View &mdash; Where on the Planet</p>
+      <h1>The<br>Spine of<br>a Continent</h1>
+      <p class="hero-sub">The Andes run the entire western edge of South America — a 8,500 km wall visible from space, spanning 11°N to 55°S.</p>
+      <div class="hero-stats">
+        <div class="stat-row"><span class="stat-num">8,500 km</span><span class="stat-desc">Length — tip to tip</span></div>
+        <div class="stat-row"><span class="stat-num">7 nations</span><span class="stat-desc">Venezuela, Colombia, Ecuador, Peru, Bolivia, Chile, Argentina</span></div>
+        <div class="stat-row"><span class="stat-num">66°</span><span class="stat-desc">Degrees of latitude covered — from tropics to subpolar</span></div>
+        <div class="stat-row"><span class="stat-num">200 km</span><span class="stat-desc">Average width of the range</span></div>
+      </div>
+    </div>
+
+    <div class="globe-wrap">
+      <!-- SVG: South America with Andes highlighted -->
+      <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="globeGrad" cx="40%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#1b4f8a" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#050810" stop-opacity="0.0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- Ocean background -->
+        <circle cx="250" cy="300" r="240" fill="#0a2040" opacity="0.5"/>
+        <circle cx="250" cy="300" r="240" fill="url(#globeGrad)"/>
+
+        <!-- Grid lines (parallels and meridians) -->
+        <g opacity="0.12" stroke="#4a8ab8" stroke-width="0.5" fill="none">
+          <!-- Parallels -->
+          <ellipse cx="250" cy="180" rx="210" ry="18"/>
+          <ellipse cx="250" cy="240" rx="230" ry="22"/>
+          <ellipse cx="250" cy="300" rx="240" ry="24"/>
+          <ellipse cx="250" cy="360" rx="230" ry="22"/>
+          <ellipse cx="250" cy="420" rx="200" ry="18"/>
+          <ellipse cx="250" cy="470" rx="155" ry="13"/>
+          <!-- Meridians (simplified as lines) -->
+          <line x1="100" y1="80" x2="180" y2="540"/>
+          <line x1="160" y1="65" x2="210" y2="545"/>
+          <line x1="250" y1="60" x2="250" y2="548"/>
+          <line x1="340" y1="65" x2="290" y2="545"/>
+          <line x1="400" y1="80" x2="320" y2="540"/>
+        </g>
+
+        <!-- South America continent shape (simplified) -->
+        <path d="
+          M210,110
+          C215,105 225,100 238,100
+          C250,100 262,104 272,110
+          C285,118 292,128 298,140
+          C308,158 312,175 315,192
+          C320,215 318,235 322,255
+          C328,280 335,298 340,318
+          C345,340 346,362 344,382
+          C340,405 332,425 320,445
+          C308,465 290,480 275,492
+          C262,502 248,508 238,510
+          C225,510 212,505 200,495
+          C185,482 176,465 172,448
+          C168,430 170,412 173,395
+          C178,372 186,350 188,328
+          C190,308 186,290 182,272
+          C177,250 170,232 168,212
+          C166,192 168,172 172,155
+          C177,138 190,120 210,110 Z"
+          fill="#2a6644" opacity="0.85"/>
+
+        <!-- Andes spine — highlighted in gold/orange -->
+        <!-- Running along western edge of continent -->
+        <path d="
+          M212,112
+          C214,120 215,132 216,146
+          C217,162 216,178 216,196
+          C216,216 215,234 214,254
+          C214,272 214,290 215,310
+          C216,332 218,352 220,372
+          C222,392 224,412 224,430
+          C222,448 219,462 216,474
+          C213,484 210,492 208,498"
+          stroke="#f0b840" stroke-width="4.5" fill="none" stroke-linecap="round"
+          filter="url(#glow)" opacity="0.9"/>
+
+        <!-- Andes highlight glow -->
+        <path d="
+          M212,112
+          C214,120 215,132 216,146
+          C217,162 216,178 216,196
+          C216,216 215,234 214,254
+          C214,272 214,290 215,310
+          C216,332 218,352 220,372
+          C222,392 224,412 224,430
+          C222,448 219,462 216,474
+          C213,484 210,492 208,498"
+          stroke="#f0b840" stroke-width="10" fill="none" stroke-linecap="round"
+          opacity="0.15"/>
+
+        <!-- Key city/peak dots -->
+        <circle cx="220" cy="148" r="3" fill="#f0b840" opacity="0.8"/>
+        <text x="228" y="152" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.75">Bogotá</text>
+
+        <circle cx="216" cy="198" r="3" fill="#f0b840" opacity="0.8"/>
+        <text x="224" y="202" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.75">Quito</text>
+
+        <circle cx="215" cy="250" r="3" fill="#f0b840" opacity="0.8"/>
+        <text x="223" y="254" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.75">Lima</text>
+
+        <circle cx="218" cy="298" r="3" fill="#f0b840" opacity="0.8"/>
+        <text x="226" y="302" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.75">La Paz</text>
+
+        <!-- Aconcagua marker -->
+        <circle cx="220" cy="368" r="4" fill="#fdfcff" opacity="0.95"/>
+        <line x1="220" y1="365" x2="265" y2="345" stroke="#fdfcff" stroke-width="0.8" opacity="0.6"/>
+        <text x="268" y="344" font-size="9.5" fill="#fdfcff" font-family="Georgia,serif" opacity="0.85">Aconcagua ▲ 6,962m</text>
+
+        <circle cx="220" cy="432" r="3" fill="#f0b840" opacity="0.8"/>
+        <text x="228" y="436" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.75">Santiago</text>
+
+        <!-- Equator line -->
+        <line x1="60" y1="213" x2="440" y2="213" stroke="#4a8ab8" stroke-width="0.7" stroke-dasharray="4,4" opacity="0.3"/>
+        <text x="70" y="210" font-size="8" fill="#4a8ab8" font-family="Georgia,serif" opacity="0.5">Equator 0°</text>
+
+        <!-- Tropic of Capricorn -->
+        <line x1="95" y1="340" x2="408" y2="340" stroke="#4a8ab8" stroke-width="0.7" stroke-dasharray="4,4" opacity="0.2"/>
+        <text x="108" y="337" font-size="8" fill="#4a8ab8" font-family="Georgia,serif" opacity="0.4">Tropic of Capricorn 23°S</text>
+
+        <!-- Legend -->
+        <line x1="30" y1="555" x2="60" y2="555" stroke="#f0b840" stroke-width="3"/>
+        <text x="65" y="559" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">The Andes</text>
+        <rect x="30" y="568" width="28" height="10" fill="#2a6644" opacity="0.7"/>
+        <text x="65" y="578" font-size="9" fill="#c8d8f0" font-family="Georgia,serif" opacity="0.7">South America</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="countries-section">
+    <p class="lbl">Seven nations, one spine</p>
+    <h2 class="ttl">The Countries the Andes Cross</h2>
+    <p class="intro">From the Caribbean coast of Venezuela to the windswept tip of Patagonia, the Andes divide the continent — separating Pacific coastal deserts from Amazonian rainforests.</p>
+    <div class="countries-grid">
+      <div class="country-card">
+        <div class="c-name">Venezuela</div>
+        <div class="c-lat">8–12°N — Northern terminus</div>
+        <div class="c-desc">The Mérida Andes form a northeastern branch here. Pico Bolívar (4,978 m) once held glaciers — they are now completely gone.</div>
+        <div class="c-peak">Highest: Pico Bolívar — 4,978 m</div>
+      </div>
+      <div class="country-card">
+        <div class="c-name">Colombia</div>
+        <div class="c-lat">0–8°N — Three cordilleras</div>
+        <div class="c-desc">Uniquely, the Andes split into three parallel ranges in Colombia. The valley between them holds Bogotá. Both Pacific and Caribbean slopes drain here.</div>
+        <div class="c-peak">Highest: Pico Cristóbal Colón — 5,775 m</div>
+      </div>
+      <div class="country-card">
+        <div class="c-name">Ecuador</div>
+        <div class="c-lat">0–4°S — The Avenue of Volcanoes</div>
+        <div class="c-desc">A double row of volcanoes straddles the equator. Chimborazo, Cotopaxi, and others form one of Earth's most dramatic volcanic landscapes.</div>
+        <div class="c-peak">Highest: Chimborazo — 6,310 m</div>
+      </div>
+      <div class="country-card">
+        <div class="c-name">Peru</div>
+        <div class="c-lat">0–18°S — Cradle of civilizations</div>
+        <div class="c-desc">The Andes split Peru between Amazon and coast. The Cordillera Blanca holds the world's largest tropical glaciers. The Amazon River begins here.</div>
+        <div class="c-peak">Highest: Nevado Huascarán — 6,768 m</div>
+      </div>
+      <div class="country-card">
+        <div class="c-name">Bolivia</div>
+        <div class="c-lat">14–22°S — The Altiplano</div>
+        <div class="c-desc">The widest part of the Andes. A high plateau at 3,800 m average elevation, ringed by peaks above 6,000 m. Lake Titicaca sits at its northern edge.</div>
+        <div class="c-peak">Highest: Nevado Sajama — 6,542 m</div>
+      </div>
+      <div class="country-card">
+        <div class="c-name">Chile &amp; Argentina</div>
+        <div class="c-lat">22–55°S — Aconcagua to Patagonia</div>
+        <div class="c-desc">The border between Chile and Argentina follows the Andes for almost its entire length. Aconcagua — the hemisphere's highest peak — stands here, alongside the Patagonian ice fields.</div>
+        <div class="c-peak">Highest: Aconcagua — 6,962 m</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey-section">
+    <p class="lbl">North to south</p>
+    <h2 class="ttl">A Traverse of the World</h2>
+    <p class="intro">Walking the length of the Andes would pass through every climate zone on Earth — more ecological zones than any other linear path on the planet's surface.</p>
+    <div class="journey-grid">
+      <div class="j-card">
+        <div class="j-region">11°N</div>
+        <div class="j-title">Tropical Cloud Forest</div>
+        <div class="j-desc">The Andes begin in mist. Humid air from the Caribbean creates cloud forests at 2,000–3,500 m — biodiversity hotspots unlike anywhere else.</div>
+      </div>
+      <div class="j-card">
+        <div class="j-region">0°</div>
+        <div class="j-title">Equatorial Volcanoes</div>
+        <div class="j-desc">At the equator, snow-capped volcanoes rise above the clouds. Snow and equatorial sun coexist. The Inca called the mountains Apus — divine spirits.</div>
+      </div>
+      <div class="j-card">
+        <div class="j-region">14°S</div>
+        <div class="j-title">The Altiplano</div>
+        <div class="j-desc">The world's highest inhabited plateau. At 3,800 m, pink flamingos wade in turquoise salt lakes. Ancient cities like Tiwanaku flourished here for millennia.</div>
+      </div>
+      <div class="j-card">
+        <div class="j-region">24°S</div>
+        <div class="j-title">The Atacama Desert</div>
+        <div class="j-desc">The driest non-polar desert on Earth sits in the Andes' rain shadow. Virtually no rainfall — yet rivers from glaciers sustain cities along the coast.</div>
+      </div>
+      <div class="j-card">
+        <div class="j-region">33°S</div>
+        <div class="j-title">Aconcagua Zone</div>
+        <div class="j-desc">The highest point in the Americas. Bare, wind-blasted, almost extraterrestrial. The Andes at their tallest and most austere.</div>
+      </div>
+      <div class="j-card">
+        <div class="j-region">50°S</div>
+        <div class="j-title">Patagonian Ice</div>
+        <div class="j-desc">The Andes end as they began — in ice. The Southern Patagonian Ice Field is the largest contiguous ice mass in the Southern Hemisphere outside Antarctica.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Map: SVG illustration based on geographic data</span>
+    <span>Design Build Ship &mdash; v04 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
+</body>
+</html>

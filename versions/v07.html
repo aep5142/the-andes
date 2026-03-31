@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Andes — v07 — Brutalist</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #000000;
+      --white:  #ffffff;
+      --yellow: #f5d800;
+      --gray:   #888888;
+      --lgray:  #eeeeee;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: var(--white); color: var(--black); line-height: 1.3; }
+
+    /* Nav — brutalist */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      border-bottom: 3px solid var(--black);
+      padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--white);
+    }
+    nav a { color: var(--black); text-decoration: none; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+    nav a:hover { background: var(--yellow); }
+    .nav-title { font-size: 0.75rem; color: var(--black); letter-spacing: 3px; text-transform: uppercase; font-weight: bold; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; background: var(--black);
+      padding: 6rem 3rem 4rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      border-bottom: 4px solid var(--yellow);
+    }
+    .hero-kicker { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--yellow); margin-bottom: 1rem; }
+    .hero h1 {
+      font-size: clamp(5rem, 18vw, 16rem);
+      font-weight: normal; color: var(--white);
+      line-height: 0.85; letter-spacing: -4px;
+    }
+    .hero-accent { color: var(--yellow); }
+    .hero-rule { border: none; border-top: 2px solid var(--yellow); margin: 2rem 0; max-width: 460px; }
+    .hero-sub { font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--white); max-width: 640px; line-height: 1.5; }
+    .hero-num-row { display: flex; gap: 4rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .h-num { font-size: 2.2rem; color: var(--yellow); line-height: 1; }
+    .h-lbl { font-size: 0.65rem; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; display: block; margin-top: 0.2rem; }
+
+    /* Fact blocks */
+    .facts { background: var(--white); border-bottom: 3px solid var(--black); }
+    .facts-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .fb {
+      padding: 3.5rem 3rem; border-right: 2px solid var(--black);
+      border-bottom: 2px solid var(--black);
+    }
+    .fb-num { font-size: 5rem; font-weight: normal; color: var(--black); line-height: 0.9; letter-spacing: -3px; }
+    .fb-unit { font-size: 1.8rem; color: var(--gray); }
+    .fb-head { font-size: 1.1rem; font-weight: bold; color: var(--black); margin: 0.8rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .fb-body { font-size: 0.9rem; color: #333; line-height: 1.65; }
+    .fb.accent { background: var(--yellow); }
+
+    /* Text section */
+    .text-section { padding: 5rem 3rem; background: var(--white); border-bottom: 3px solid var(--black); }
+    .t-cols { display: grid; grid-template-columns: 320px 1fr; gap: 4rem; align-items: start; }
+    .t-big { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: normal; color: var(--black); line-height: 0.92; letter-spacing: -2px; border-right: 4px solid var(--yellow); padding-right: 2rem; }
+    .t-prose { font-size: 1rem; color: #1a1a1a; line-height: 1.9; }
+    .t-prose p + p { margin-top: 1.2rem; }
+
+    /* Peaks section */
+    .peaks { background: var(--black); border-bottom: 4px solid var(--yellow); padding: 4rem 3rem; }
+    .peaks h2 { font-size: clamp(2rem, 5vw, 4rem); font-weight: normal; color: var(--white); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 2.5rem; }
+    .peak-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0; }
+    .pk {
+      padding: 2rem 2rem; border: 1px solid #222;
+      position: relative;
+    }
+    .pk::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--yellow); }
+    .pk-m { font-size: 3.5rem; font-weight: normal; color: var(--yellow); line-height: 1; letter-spacing: -2px; }
+    .pk-name { font-size: 1.1rem; color: var(--white); font-weight: bold; margin-top: 0.3rem; text-transform: uppercase; }
+    .pk-country { font-size: 0.75rem; color: var(--gray); font-style: italic; }
+
+    /* River section */
+    .river-section {
+      background: var(--yellow); padding: 4rem 3rem;
+      border-bottom: 3px solid var(--black);
+    }
+    .river-section h2 { font-size: clamp(2rem, 6vw, 5rem); font-weight: normal; color: var(--black); line-height: 0.9; letter-spacing: -2px; margin-bottom: 1.5rem; }
+    .river-section p { font-size: 1rem; color: var(--black); max-width: 680px; line-height: 1.8; }
+    .river-section p + p { margin-top: 1rem; }
+    .river-num { font-size: 4rem; color: var(--black); font-weight: normal; letter-spacing: -2px; margin-top: 1.5rem; }
+    .river-lbl { font-size: 0.75rem; color: #333; text-transform: uppercase; letter-spacing: 2px; }
+
+    /* Quote section */
+    .q-section { background: var(--lgray); padding: 5rem 3rem; border-bottom: 3px solid var(--black); }
+    .q-section blockquote { font-size: clamp(1.5rem, 4vw, 3rem); font-weight: normal; color: var(--black); line-height: 1.2; letter-spacing: -0.5px; max-width: 900px; }
+    .q-section cite { display: block; margin-top: 1.5rem; font-size: 0.8rem; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; font-style: normal; }
+
+    footer {
+      background: var(--black); padding: 1.5rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.75rem; color: var(--gray);
+      border-top: 3px solid var(--yellow);
+    }
+    footer a { color: var(--gray); text-decoration: none; }
+    footer a:hover { color: var(--yellow); }
+
+    @media (max-width: 768px) {
+      .t-cols { grid-template-columns: 1fr; gap: 2rem; }
+      .t-big { border-right: none; border-bottom: 4px solid var(--yellow); padding-right: 0; padding-bottom: 1.5rem; }
+      .text-section, .peaks, .river-section, .q-section { padding: 3rem 1.5rem; }
+      .facts-inner { grid-template-columns: 1fr; }
+      .hero { padding: 5rem 1.5rem 3rem; }
+      .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes — v07</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-kicker">South America</p>
+    <h1>THE<br>AN<span class="hero-accent">DE</span>S</h1>
+    <hr class="hero-rule">
+    <p class="hero-sub">The backbone of a continent. The longest mountain range on Earth. The birthplace of the Amazon. The home of the Inca. 8,500 kilometers of uninterrupted spine.</p>
+    <div class="hero-num-row">
+      <div><span class="h-num">8,500</span><span class="h-lbl">km long</span></div>
+      <div><span class="h-num">6,962</span><span class="h-lbl">m highest peak</span></div>
+      <div><span class="h-num">7</span><span class="h-lbl">countries</span></div>
+      <div><span class="h-num">35M</span><span class="h-lbl">people</span></div>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div class="facts-inner">
+      <div class="fb accent">
+        <div class="fb-num">8,500<span class="fb-unit"> km</span></div>
+        <div class="fb-head">Longest mountain range on Earth</div>
+        <div class="fb-body">From Venezuela in the north to Tierra del Fuego in the south, the Andes run without interruption. Twice the length of the Himalayas. Three times the Alps.</div>
+      </div>
+      <div class="fb">
+        <div class="fb-num">6,962<span class="fb-unit"> m</span></div>
+        <div class="fb-head">Highest peak outside Asia</div>
+        <div class="fb-body">Aconcagua. Argentina. If you put Mont Blanc on top of Mont Blanc, it would still not reach Aconcagua's summit. The entire Alps would fit in its shadow.</div>
+      </div>
+      <div class="fb">
+        <div class="fb-num">200+</div>
+        <div class="fb-head">Active volcanoes</div>
+        <div class="fb-body">The highest concentration of active volcanoes on Earth. Ojos del Salado is the world's tallest active volcano at 6,893 m. The ring of fire runs through here.</div>
+      </div>
+      <div class="fb accent">
+        <div class="fb-num">3,812<span class="fb-unit"> m</span></div>
+        <div class="fb-head">Altitude of Lake Titicaca</div>
+        <div class="fb-body">The world's highest navigable lake. Ships cross it. People were born on it. A civilization rose beside it. Higher than any summit in Western Europe.</div>
+      </div>
+      <div class="fb">
+        <div class="fb-num">1</div>
+        <div class="fb-head">Source of the Amazon River</div>
+        <div class="fb-body">The world's largest river by volume begins as snowmelt on the Peruvian Andes at 5,597 m. It runs 6,400 km to the Atlantic. The Andes made it possible.</div>
+      </div>
+      <div class="fb">
+        <div class="fb-num">40K</div>
+        <div class="fb-head">km of Inca road</div>
+        <div class="fb-body">The Inca built more road than Rome — across terrain Rome could not have imagined. Suspension bridges, tunnels, relay stations every 20 km. No wheels. No iron. No writing.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-section">
+    <div class="t-cols">
+      <div class="t-big">More<br>than<br>rock.</div>
+      <div class="t-prose">
+        <p>The Andes are not simply tall. They are diverse. From the equatorial cloud forests of Colombia — dripping with orchids, alive with hummingbirds — to the hyper-arid Atacama Desert in Chile, where it has not rained in recorded history. From the high-altitude wetlands of Bolivia to the glacial fjords of Patagonia.</p>
+        <p>The range runs through eleven degrees north and fifty-five degrees south of the equator. In that span, it contains virtually every climate zone on Earth. Nearly one in six of all plant species on the planet grows somewhere on the Andes.</p>
+        <p>This is not a place. It is a world.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="peaks">
+    <h2>The Five Highest</h2>
+    <div class="peak-list">
+      <div class="pk">
+        <div class="pk-m">6,962</div>
+        <div class="pk-name">Aconcagua</div>
+        <div class="pk-country">Argentina</div>
+      </div>
+      <div class="pk">
+        <div class="pk-m">6,893</div>
+        <div class="pk-name">Ojos del Salado</div>
+        <div class="pk-country">Argentina / Chile</div>
+      </div>
+      <div class="pk">
+        <div class="pk-m">6,795</div>
+        <div class="pk-name">Monte Pissis</div>
+        <div class="pk-country">Argentina</div>
+      </div>
+      <div class="pk">
+        <div class="pk-m">6,768</div>
+        <div class="pk-name">Nevado Huascarán</div>
+        <div class="pk-country">Peru</div>
+      </div>
+      <div class="pk">
+        <div class="pk-m">6,542</div>
+        <div class="pk-name">Nevado Sajama</div>
+        <div class="pk-country">Bolivia</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="river-section">
+    <h2>The Andes<br>Made the Amazon.</h2>
+    <p>Every drop of water in the Amazon River — the world's largest river by volume — began as snow or rain on the Andes. The mountains catch moisture from the Atlantic, lift it, freeze it, and release it slowly. Without the Andes, there is no Amazon.</p>
+    <p>Without the Amazon, 10% of all species on Earth have nowhere to live.</p>
+    <div class="river-num">6,400 km</div>
+    <div class="river-lbl">Length of the Amazon River</div>
+  </div>
+
+  <div class="q-section">
+    <blockquote>
+      "The Andes are not just mountains. They are the spine of an entire continent — the source of its mightiest rivers, the cradle of its oldest civilizations, the divide between its oceans and its forests."
+      <cite>— Adapted from Alexander von Humboldt, Cosmos, 1845</cite>
+    </blockquote>
+  </div>
+
+  <footer>
+    <span>Design Build Ship &mdash; v07 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
+</body>
+</html>

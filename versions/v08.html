@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Andes — v08 — The Sky Above</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --space:    #060a14;
+      --deep:     #0a1628;
+      --navy:     #102040;
+      --blue:     #1a3a6a;
+      --sky:      #2a5a9a;
+      --pale:     #c8d8f0;
+      --gold:     #c9a84c;
+      --star:     #eef4fc;
+      --stone:    #5a7898;
+      --white:    #f0f4fc;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: var(--space); color: var(--star); line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(6,10,20,0.85); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(200,216,240,0.08);
+    }
+    nav a { color: var(--pale); text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    nav a:hover { color: var(--white); }
+    .nav-title { font-size: 0.85rem; color: var(--pale); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Hero with CSS star field */
+    .hero {
+      min-height: 100vh; position: relative; overflow: hidden;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(16,32,64,0.8) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(10,24,48,0.6) 0%, transparent 50%),
+        var(--space);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 5rem 4rem 4rem;
+    }
+
+    /* Stars via box-shadows on pseudo-element */
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        radial-gradient(1px 1px at 8% 12%, rgba(238,244,252,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 35%, rgba(238,244,252,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 22% 8%, rgba(238,244,252,0.85) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 20%, rgba(238,244,252,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 38% 45%, rgba(238,244,252,0.75) 0%, transparent 100%),
+        radial-gradient(2px 2px at 45% 15%, rgba(201,168,76,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 52% 30%, rgba(238,244,252,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 8%, rgba(238,244,252,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 68% 22%, rgba(238,244,252,0.65) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 40%, rgba(238,244,252,0.7) 0%, transparent 100%),
+        radial-gradient(2px 2px at 82% 12%, rgba(238,244,252,0.85) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 28%, rgba(201,168,76,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 55%, rgba(238,244,252,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 18% 62%, rgba(238,244,252,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 70%, rgba(238,244,252,0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 58%, rgba(238,244,252,0.7) 0%, transparent 100%),
+        radial-gradient(2px 2px at 48% 68%, rgba(238,244,252,0.75) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 52%, rgba(201,168,76,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 65%, rgba(238,244,252,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 72% 48%, rgba(238,244,252,0.85) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 55%, rgba(238,244,252,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 62%, rgba(238,244,252,0.6) 0%, transparent 100%),
+        radial-gradient(2px 2px at 10% 78%, rgba(238,244,252,0.75) 0%, transparent 100%),
+        radial-gradient(1px 1px at 28% 85%, rgba(238,244,252,0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 42% 82%, rgba(238,244,252,0.65) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 58% 78%, rgba(201,168,76,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 75%, rgba(238,244,252,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 82%, rgba(238,244,252,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 3% 42%, rgba(238,244,252,0.75) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 45%, rgba(238,244,252,0.65) 0%, transparent 100%),
+        /* Second density layer — more, smaller stars -->
+        radial-gradient(0.8px 0.8px at 12% 18%, rgba(238,244,252,0.5) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 33% 12%, rgba(238,244,252,0.45) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 50% 5%, rgba(238,244,252,0.5) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 70% 18%, rgba(238,244,252,0.4) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 86% 8%, rgba(238,244,252,0.5) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 40% 25%, rgba(238,244,252,0.4) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 62% 35%, rgba(238,244,252,0.45) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 77% 30%, rgba(238,244,252,0.4) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 94% 20%, rgba(238,244,252,0.5) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 20% 50%, rgba(238,244,252,0.4) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 56% 42%, rgba(238,244,252,0.45) 0%, transparent 100%),
+        radial-gradient(0.8px 0.8px at 80% 48%, rgba(238,244,252,0.4) 0%, transparent 100%);
+    }
+
+    /* Mountain silhouette at bottom of hero */
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 30vh;
+      background:
+        linear-gradient(to top, var(--space) 0%, rgba(6,10,20,0.9) 40%, transparent 100%);
+      clip-path: polygon(
+        0% 100%, 0% 75%, 3% 68%, 8% 58%, 12% 65%, 15% 55%, 18% 45%, 22% 50%,
+        25% 38%, 28% 28%, 32% 35%, 35% 25%, 38% 32%, 42% 20%, 45% 30%,
+        48% 22%, 50% 15%, 52% 22%, 55% 28%, 58% 18%, 62% 25%, 65% 35%,
+        68% 28%, 72% 38%, 75% 45%, 78% 38%, 82% 48%, 86% 55%, 90% 45%,
+        93% 55%, 96% 62%, 100% 58%, 100% 100%
+      );
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+    .hero-label { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+    .hero h1 { font-size: clamp(3rem, 9vw, 7.5rem); font-weight: normal; color: var(--white); line-height: 0.9; letter-spacing: -2px; }
+    .hero-sub { margin-top: 1.2rem; font-size: 1.1rem; color: rgba(200,216,240,0.8); font-style: italic; max-width: 500px; }
+    .hero-facts { margin-top: 2rem; display: flex; gap: 3rem; flex-wrap: wrap; border-top: 1px solid rgba(200,216,240,0.15); padding-top: 1.5rem; }
+    .hf-item .num { display: block; font-size: 1.4rem; color: var(--gold); }
+    .hf-item .lbl { font-size: 0.68rem; color: var(--stone); text-transform: uppercase; letter-spacing: 1.5px; }
+
+    /* ALMA image section */
+    .obs-hero-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+    .obs-img {
+      overflow: hidden; background: var(--deep);
+    }
+    .obs-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      filter: saturate(0.85) brightness(0.9);
+    }
+    .obs-text {
+      background: var(--deep); padding: 4rem 3.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid rgba(200,216,240,0.08);
+    }
+    .obs-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .obs-title { font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: normal; color: var(--white); line-height: 1.2; margin-bottom: 1rem; }
+    .obs-body { font-size: 0.95rem; color: rgba(200,216,240,0.72); line-height: 1.9; }
+
+    /* Sections */
+    section { padding: 5rem 4rem; }
+    .lbl { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .ttl { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: normal; line-height: 1.2; color: var(--white); margin-bottom: 1rem; }
+    .intro { font-size: 1rem; color: rgba(200,216,240,0.72); max-width: 640px; line-height: 1.9; }
+
+    /* Why Atacama */
+    .why-section { background: var(--navy); }
+    .why-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 0; }
+    .why-card { padding: 2.5rem 2rem; border-right: 1px solid rgba(42,90,154,0.3); border-bottom: 1px solid rgba(42,90,154,0.3); }
+    .why-icon { font-size: 1.5rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .why-title { font-size: 1rem; font-weight: bold; color: var(--white); margin-bottom: 0.4rem; }
+    .why-stat { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .why-body { font-size: 0.87rem; color: rgba(200,216,240,0.65); line-height: 1.7; }
+
+    /* Observatories */
+    .obs-section { background: var(--space); }
+    .obs-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .obs-card { background: var(--deep); padding: 2rem; border-top: 2px solid var(--blue); }
+    .obs-name { font-size: 1.2rem; font-weight: normal; color: var(--white); margin-bottom: 0.2rem; }
+    .obs-full { font-size: 0.8rem; color: var(--stone); font-style: italic; margin-bottom: 0.4rem; }
+    .obs-alt { font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.7rem; }
+    .obs-desc { font-size: 0.87rem; color: rgba(200,216,240,0.65); line-height: 1.7; }
+    .obs-discover { margin-top: 0.6rem; font-size: 0.8rem; color: var(--pale); font-style: italic; }
+
+    /* Discoveries */
+    .disc-section { background: var(--deep); border-top: 1px solid rgba(200,216,240,0.08); }
+    .disc-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .disc-card { border-left: 2px solid var(--sky); padding-left: 1.4rem; }
+    .disc-year { font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.3rem; }
+    .disc-title { font-size: 1rem; font-weight: bold; color: var(--white); margin-bottom: 0.4rem; }
+    .disc-body { font-size: 0.87rem; color: rgba(200,216,240,0.65); line-height: 1.7; }
+
+    footer {
+      background: var(--space); padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--stone);
+      border-top: 1px solid rgba(200,216,240,0.1);
+    }
+    footer a { color: var(--stone); text-decoration: none; }
+    footer a:hover { color: var(--pale); }
+
+    @media (max-width: 900px) {
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 5rem 1.5rem 3rem; }
+      .obs-hero-section { grid-template-columns: 1fr; }
+      .obs-img { height: 45vh; }
+      .obs-text { padding: 3rem 2rem; }
+      .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes &mdash; v08</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-label">The Sky Above — Atacama, Chile</p>
+      <h1>The Clearest<br>Sky on Earth</h1>
+      <p class="hero-sub">The high Atacama Desert, perched on the Andes at 5,000 meters, is the best place in the world to look at the universe. Humanity has pointed all its greatest telescopes here.</p>
+      <div class="hero-facts">
+        <div class="hf-item"><span class="num">330</span><span class="lbl">Clear nights/year</span></div>
+        <div class="hf-item"><span class="num">5,058 m</span><span class="lbl">ALMA altitude</span></div>
+        <div class="hf-item"><span class="num">0%</span><span class="lbl">Relative humidity (some days)</span></div>
+        <div class="hf-item"><span class="num">66</span><span class="lbl">Telescopes at Paranal &amp; La Silla</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="obs-hero-section">
+    <div class="obs-img">
+      <img src="./images/atacama_alma.jpg" alt="ALMA Observatory array, Atacama Desert, Chile" />
+    </div>
+    <div class="obs-text">
+      <p class="obs-label">ALMA — Atacama Large Millimeter Array</p>
+      <h2 class="obs-title">66 Telescopes Acting as One</h2>
+      <p class="obs-body">At 5,058 meters above sea level, ALMA is the highest major astronomical observatory on Earth. Sixty-six antennas work together as a single instrument — the largest in the world — listening to the universe in wavelengths invisible to human eyes. It watches the birth of planets, the spin of distant galaxies, the chemistry of the first stars.</p>
+      <p class="obs-body" style="margin-top:0.8rem;">The Atacama plateau is ideal: no rain, no vegetation, minimal atmosphere between the antennas and the sky. On some days, the relative humidity registers zero.</p>
+    </div>
+  </div>
+
+  <section class="why-section">
+    <p class="lbl">Why here</p>
+    <h2 class="ttl">What Makes the Atacama Extraordinary</h2>
+    <p class="intro">Astronomy requires the sky to cooperate. The Atacama offers conditions found nowhere else on Earth — a combination of altitude, aridity, and isolation that no other site matches.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">↑</div>
+        <div class="why-title">Altitude</div>
+        <div class="why-stat">5,000 m above sea level</div>
+        <div class="why-body">At 5,000 m, you are above 50% of Earth's atmosphere. Less air means less absorption, less turbulence, less everything that blurs starlight. Gamma rays, millimeter waves, and infrared that never reach sea level arrive here intact.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">○</div>
+        <div class="why-title">Aridity</div>
+        <div class="why-stat">&lt; 1 mm rain per year (some regions)</div>
+        <div class="why-body">Water vapor is the astronomer's enemy — it absorbs infrared and radio waves. The Atacama is the driest non-polar desert on Earth. Some weather stations have never recorded rainfall in their operational history.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✦</div>
+        <div class="why-title">Darkness</div>
+        <div class="why-stat">330+ clear nights per year</div>
+        <div class="why-body">The Atacama sees cloud cover on fewer than 35 nights per year. The nearest cities are hundreds of kilometers away. From the plateau, the Milky Way casts shadows on cloudless nights.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">◎</div>
+        <div class="why-title">Southern Sky</div>
+        <div class="why-stat">27°S latitude</div>
+        <div class="why-body">From the southern hemisphere, telescopes have a direct view of the galactic center — the densest, most active region of the Milky Way. The Large and Small Magellanic Clouds, our nearest galactic neighbors, are visible to the naked eye.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="obs-section">
+    <p class="lbl">The instruments</p>
+    <h2 class="ttl">The Observatories of the Atacama</h2>
+    <p class="intro">No other area on Earth concentrates as much astronomical instrumentation. The European Southern Observatory alone operates three major sites within 100 km of each other on this plateau.</p>
+    <div class="obs-grid">
+      <div class="obs-card">
+        <div class="obs-name">ALMA</div>
+        <div class="obs-full">Atacama Large Millimeter/submillimeter Array</div>
+        <div class="obs-alt">5,058 m — Llano de Chajnantor</div>
+        <div class="obs-desc">A joint project of Europe, North America, and East Asia. ALMA's 66 antennas can be spread up to 16 km apart, giving it the resolution of a 16 km telescope. It watches cold matter — dust, gas, molecules — the raw material of stars and planets.</div>
+        <div class="obs-discover">Discovered: first dust ring around a star, protoplanetary systems in formation, molecular complexity in space</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-name">VLT</div>
+        <div class="obs-full">Very Large Telescope — ESO</div>
+        <div class="obs-alt">2,635 m — Cerro Paranal</div>
+        <div class="obs-desc">Four 8.2-meter telescopes that can combine their light into a single instrument — effectively creating the largest optical telescope on Earth. Each mirror was polished to within 10 nanometers of perfection over a period of years.</div>
+        <div class="obs-discover">Captured first direct image of an exoplanet. Confirmed the accelerating expansion of the universe.</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-name">ELT</div>
+        <div class="obs-full">Extremely Large Telescope — Under construction</div>
+        <div class="obs-alt">3,046 m — Cerro Armazones</div>
+        <div class="obs-desc">When completed, the ELT will be the largest optical/infrared telescope in the world — a 39-meter mirror made of 798 hexagonal segments. It will be able to directly image Earth-sized planets around nearby stars and analyze their atmospheres for signs of life.</div>
+        <div class="obs-discover">Goal: detect biosignatures in exoplanet atmospheres. First light expected 2028.</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-name">Gemini South</div>
+        <div class="obs-full">Gemini South Observatory — NOIRLab</div>
+        <div class="obs-alt">2,722 m — Cerro Pachón</div>
+        <div class="obs-desc">One of two 8.1-meter Gemini telescopes on opposite sides of the Earth — Gemini North in Hawaii, Gemini South here. Together they provide full-sky coverage to astronomers from partner nations including the United States, Canada, Argentina, Chile, and Brazil.</div>
+        <div class="obs-discover">First image of a multiple-planet exoplanet system.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="disc-section">
+    <p class="lbl">What we learned</p>
+    <h2 class="ttl">Discoveries from the Sky Above the Andes</h2>
+    <p class="intro">The instruments on the Atacama plateau have fundamentally changed our picture of the universe — from the structure of galaxies to the possibility of life on other worlds.</p>
+    <div class="disc-grid">
+      <div class="disc-card">
+        <div class="disc-year">1998</div>
+        <div class="disc-title">The universe is accelerating</div>
+        <div class="disc-body">Observations from Cerro Tololo Inter-American Observatory (part of the Atacama complex) contributed to the discovery that the expansion of the universe is speeding up — implying the existence of dark energy. This won the 2011 Nobel Prize in Physics.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-year">2004</div>
+        <div class="disc-title">First direct image of an exoplanet</div>
+        <div class="disc-body">The VLT captured the first confirmed direct image of a planet outside our solar system: 2M1207b, a planet 5 times the mass of Jupiter. Before this, all exoplanet detections had been indirect — measuring stellar wobbles or dimming.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-year">2014</div>
+        <div class="disc-title">Planet formation in real time</div>
+        <div class="disc-body">ALMA captured the first detailed image of protoplanetary disk HL Tau — a young star surrounded by rings of dust and gas in the process of forming planets. The image redefined our understanding of how quickly planets form.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-year">2019</div>
+        <div class="disc-title">The first black hole image</div>
+        <div class="disc-body">The Event Horizon Telescope — a global network that included ALMA as its most sensitive node — captured the first image of a black hole's shadow: M87*, 6.5 billion times the mass of the Sun, 55 million light years away.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Image: ALMA Observatory &mdash; &copy; ESO / C. Malin, Wikimedia Commons</span>
+    <span>Design Build Ship &mdash; v08 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
+</body>
+</html>

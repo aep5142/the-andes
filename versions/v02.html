@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Andes — v02 — Elevation Profile</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --deep:   #1a0d2e;
+      --mid:    #2d1b4e;
+      --light:  #5c3a7e;
+      --lav:    #a07cc5;
+      --pale:   #d8c9e8;
+      --cream:  #f5f0fa;
+      --stone:  #8a7a9a;
+      --white:  #fdfcff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: var(--cream); color: var(--deep); line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(26,13,46,0.88); backdrop-filter: blur(6px);
+    }
+    nav a { color: var(--pale); text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    nav a:hover { color: var(--white); }
+    .nav-title { font-size: 0.85rem; color: var(--pale); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; background: var(--deep);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 7rem 4rem 0; position: relative; overflow: hidden;
+    }
+    .hero-content { position: relative; z-index: 2; padding-bottom: 2rem; }
+    .hero-label { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--lav); margin-bottom: 0.8rem; }
+    .hero h1 { font-size: clamp(3.5rem, 9vw, 7.5rem); font-weight: normal; color: var(--white); line-height: 0.9; letter-spacing: -2px; }
+    .hero-sub { margin-top: 1rem; font-size: 1.1rem; color: var(--pale); font-style: italic; max-width: 480px; }
+
+    .elev-wrap { position: relative; z-index: 1; height: 52vh; overflow: hidden; }
+    .elev-wrap svg { width: 100%; height: 100%; display: block; }
+
+    /* Sections */
+    section { padding: 5rem 4rem; }
+    .lbl { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--lav); margin-bottom: 0.5rem; }
+    .ttl { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: normal; line-height: 1.2; color: var(--deep); margin-bottom: 1rem; }
+    .intro { font-size: 1rem; color: #5a4a6a; max-width: 620px; line-height: 1.9; }
+
+    /* Peaks grid */
+    .peaks-section { background: var(--white); }
+    .peaks-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2rem; }
+    .peak-card { border-left: 3px solid var(--lav); padding-left: 1.2rem; }
+    .peak-elev { font-size: 2.2rem; font-weight: normal; color: var(--light); letter-spacing: -1px; line-height: 1; }
+    .peak-unit { font-size: 1rem; color: var(--stone); }
+    .peak-name { margin-top: 0.3rem; font-size: 1rem; color: var(--deep); font-weight: bold; }
+    .peak-country { font-size: 0.8rem; color: var(--stone); font-style: italic; }
+    .peak-note { margin-top: 0.4rem; font-size: 0.85rem; color: #5a4a6a; line-height: 1.6; }
+
+    /* Geology */
+    .geo-section { background: var(--mid); }
+    .geo-section .lbl { color: var(--pale); }
+    .geo-section .ttl { color: var(--white); }
+    .geo-section .intro { color: rgba(216,201,232,0.8); }
+    .geo-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2.5rem; }
+    .geo-card { border-top: 1px solid rgba(208,185,232,0.2); padding-top: 1.5rem; }
+    .geo-num { font-size: 3rem; font-weight: normal; color: var(--pale); letter-spacing: -2px; line-height: 1; }
+    .geo-label { margin-top: 0.4rem; font-size: 0.95rem; color: var(--white); font-weight: bold; }
+    .geo-body { margin-top: 0.5rem; font-size: 0.87rem; color: rgba(208,185,232,0.7); line-height: 1.7; }
+
+    /* Length comparison */
+    .len-section { background: var(--cream); }
+    .bar-wrap { margin-top: 3rem; max-width: 800px; }
+    .bar-row { display: grid; grid-template-columns: 160px 1fr 80px; align-items: center; gap: 1rem; margin-bottom: 0.8rem; }
+    .bar-name { font-size: 0.85rem; color: var(--deep); text-align: right; }
+    .bar-ctry { display: block; font-size: 0.72rem; color: var(--stone); font-style: italic; }
+    .bar-track { height: 20px; background: #e4dced; border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 2px; background: var(--light); }
+    .bar-val { font-size: 0.8rem; color: var(--stone); white-space: nowrap; }
+
+    footer {
+      background: var(--deep); padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--stone);
+    }
+    footer a { color: var(--stone); text-decoration: none; }
+    footer a:hover { color: var(--pale); }
+
+    @media (max-width: 768px) {
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 5rem 1.5rem 0; }
+      .bar-row { grid-template-columns: 90px 1fr 55px; }
+      .nav-title { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">&larr; Gallery</a>
+    <span class="nav-title">The Andes &mdash; v02</span>
+    <a href="../01%20Agust%C3%ADn%20Eyzaguirre.html">Deliverables</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-label">Elevation profile &mdash; Venezuela to Tierra del Fuego</p>
+      <h1>The<br>Spine</h1>
+      <p class="hero-sub">8,500 km of mountains drawn in the sky above South America.</p>
+    </div>
+    <div class="elev-wrap">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#a07cc5" stop-opacity="0.95"/>
+            <stop offset="55%"  stop-color="#5c3a7e" stop-opacity="0.75"/>
+            <stop offset="100%" stop-color="#1a0d2e" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <!-- Andes silhouette N→S -->
+        <path d="M0,400 L0,355 C25,338 48,310 68,288 C85,270 98,248 115,222
+          C128,200 140,170 155,142 C164,122 172,92 182,70 C190,52 197,44 206,48
+          C215,53 224,76 238,92 C250,78 262,44 274,24 C282,10 289,4 296,7
+          C303,11 310,28 320,52 C330,76 338,118 350,148 C360,168 370,145 382,118
+          C392,90 398,56 408,38 C416,22 424,17 432,21 C440,27 448,55 460,90
+          C470,118 478,100 488,72 C498,46 506,16 516,0
+          C522,0 528,6 536,20 C546,40 558,82 570,120
+          C582,150 596,165 614,175 C632,183 658,172 682,180
+          C706,188 726,176 744,186 C762,196 775,215 795,226
+          C815,237 838,248 860,260 C880,270 902,282 924,295
+          C944,306 964,325 980,342 C994,356 1006,366 1018,373
+          C1038,381 1062,389 1092,394 C1122,397 1162,400 1200,400 Z"
+          fill="url(#mg)"/>
+
+        <!-- Peak markers -->
+        <line x1="516" y1="2" x2="516" y2="72" stroke="#d8c9e8" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+        <circle cx="516" cy="5" r="3.5" fill="#fdfcff" opacity="0.9"/>
+        <text x="516" y="90" text-anchor="middle" font-size="12" fill="#d8c9e8" font-family="Georgia,serif" opacity="0.9">Aconcagua</text>
+        <text x="516" y="105" text-anchor="middle" font-size="10" fill="#a07cc5" font-family="Georgia,serif">6,962 m</text>
+
+        <line x1="274" y1="24" x2="274" y2="85" stroke="#d8c9e8" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+        <circle cx="274" cy="27" r="3" fill="#fdfcff" opacity="0.8"/>
+        <text x="274" y="100" text-anchor="middle" font-size="11" fill="#d8c9e8" font-family="Georgia,serif" opacity="0.8">Huascarán</text>
+        <text x="274" y="114" text-anchor="middle" font-size="10" fill="#a07cc5" font-family="Georgia,serif" opacity="0.75">6,768 m</text>
+
+        <line x1="182" y1="70" x2="182" y2="136" stroke="#d8c9e8" stroke-width="1" stroke-dasharray="3,3" opacity="0.55"/>
+        <circle cx="182" cy="73" r="2.5" fill="#fdfcff" opacity="0.7"/>
+        <text x="182" y="150" text-anchor="middle" font-size="10" fill="#d8c9e8" font-family="Georgia,serif" opacity="0.7">Chimborazo</text>
+        <text x="182" y="163" text-anchor="middle" font-size="9" fill="#a07cc5" font-family="Georgia,serif" opacity="0.65">6,310 m</text>
+
+        <circle cx="408" cy="41" r="2.5" fill="#fdfcff" opacity="0.65"/>
+        <text x="360" y="30" text-anchor="middle" font-size="9.5" fill="#c4aadc" font-family="Georgia,serif" opacity="0.65">Ojos del Salado 6,893 m</text>
+
+        <text x="35" y="390" font-size="9" fill="#5c3a7e" font-family="Georgia,serif" opacity="0.6">11°N — Venezuela</text>
+        <text x="1165" y="390" text-anchor="end" font-size="9" fill="#5c3a7e" font-family="Georgia,serif" opacity="0.6">55°S — Tierra del Fuego</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="peaks-section">
+    <p class="lbl">Elevation landmarks</p>
+    <h2 class="ttl">The Highest Points</h2>
+    <p class="intro">Five of the six highest peaks outside Asia rise from the Andes. The range holds an unbroken wall of summits above 6,000 m — a scale found nowhere else outside the Himalayas.</p>
+    <div class="peaks-grid">
+      <div class="peak-card">
+        <div class="peak-elev">6,962<span class="peak-unit"> m</span></div>
+        <div class="peak-name">Aconcagua</div>
+        <div class="peak-country">Mendoza, Argentina</div>
+        <div class="peak-note">Highest peak in the Western and Southern Hemispheres. The summit marks the Argentina–Chile border at 32°S.</div>
+      </div>
+      <div class="peak-card">
+        <div class="peak-elev">6,893<span class="peak-unit"> m</span></div>
+        <div class="peak-name">Ojos del Salado</div>
+        <div class="peak-country">Argentina / Chile border</div>
+        <div class="peak-note">Earth's highest active volcano. Its crater lake — at ~6,390 m — is the world's highest lake by any measure.</div>
+      </div>
+      <div class="peak-card">
+        <div class="peak-elev">6,768<span class="peak-unit"> m</span></div>
+        <div class="peak-name">Nevado Huascarán</div>
+        <div class="peak-country">Ancash, Peru</div>
+        <div class="peak-note">Highest point in Peru and in the tropical Andes. Its glaciers feed rivers that supply water to millions below.</div>
+      </div>
+      <div class="peak-card">
+        <div class="peak-elev">6,542<span class="peak-unit"> m</span></div>
+        <div class="peak-name">Nevado Sajama</div>
+        <div class="peak-country">Oruro, Bolivia</div>
+        <div class="peak-note">Bolivia's highest peak, an extinct stratovolcano rising above the Altiplano. Sacred to the Aymara people.</div>
+      </div>
+      <div class="peak-card">
+        <div class="peak-elev">6,310<span class="peak-unit"> m</span></div>
+        <div class="peak-name">Chimborazo</div>
+        <div class="peak-country">Chimborazo, Ecuador</div>
+        <div class="peak-note">Due to Earth's equatorial bulge, Chimborazo's summit is the point farthest from Earth's center — further than Everest.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="geo-section">
+    <p class="lbl">How they were built</p>
+    <h2 class="ttl">250 Million Years in the Making</h2>
+    <p class="intro">The Andes rose to their current height largely in the last 25 million years, driven by the Nazca oceanic plate diving beneath South America at extraordinary speed.</p>
+    <div class="geo-grid">
+      <div class="geo-card">
+        <div class="geo-num">~70<span style="font-size:1.5rem"> mm/yr</span></div>
+        <div class="geo-label">Rate of Nazca Plate subduction</div>
+        <div class="geo-body">One of Earth's fastest subduction rates. As the Pacific plate dives beneath South America, it compresses, thickens, and lifts the crust above.</div>
+      </div>
+      <div class="geo-card">
+        <div class="geo-num">70<span style="font-size:1.5rem"> km</span></div>
+        <div class="geo-label">Average crustal thickness</div>
+        <div class="geo-body">Among the thickest continental crust on Earth. The global average is 35 km. This extra mass is what sustains the mountains' extraordinary height.</div>
+      </div>
+      <div class="geo-card">
+        <div class="geo-num">200+</div>
+        <div class="geo-label">Active volcanoes</div>
+        <div class="geo-body">The subducting plate melts as it descends, creating a chain of active volcanoes — the most concentrated in the world — along the Pacific Ring of Fire.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="len-section">
+    <p class="lbl">Scale in context</p>
+    <h2 class="ttl">Longer Than Any Range on Earth</h2>
+    <p class="intro">Measured end-to-end, the Andes are nearly twice the length of the Himalayas and more than three times the Alps. No mountain range on Earth spans as many degrees of latitude.</p>
+    <div class="bar-wrap">
+      <div class="bar-row">
+        <div class="bar-name">Andes <span class="bar-ctry">South America</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%; background:#5c3a7e;"></div></div>
+        <div class="bar-val">8,500 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Rocky Mountains <span class="bar-ctry">North America</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:56%;"></div></div>
+        <div class="bar-val">4,800 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Great Dividing Range <span class="bar-ctry">Australia</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:41%;"></div></div>
+        <div class="bar-val">3,500 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Himalayas <span class="bar-ctry">Asia</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:32%;"></div></div>
+        <div class="bar-val">2,700 km</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Alps <span class="bar-ctry">Europe</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div>
+        <div class="bar-val">1,200 km</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Design Build Ship &mdash; v02 &mdash; Agustín Eyzaguirre</span>
+    <a href="../index.html">&larr; Back to gallery</a>
+  </footer>
+
+</body>
+</html>
